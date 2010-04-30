@@ -1,0 +1,20 @@
+<h3><%=h @lemma.title %></h3>
+ 
+<%=simple_format @lemma.body %>
+ 
+<% unless @lemma.contains?(current_user) %>
+  <% form_for [@lemma,Coauthor.new] do |f| %>
+    <%= f.submit "申请成为此词条的共同创作者" %>
+  <% end %>
+<% end %>
+<hr />
+<p>
+  <b>共同创作者:</b><br/>
+  <% @lemma.coauthors.each do |coauthor| %>
+    <%= coauthor.user.login if coauthor.active? %>
+  <% end %>
+</p>
+<% if @lemma.contains?(current_user) %>
+  <%= link_to '编辑该词条', [:edit,@lemma] %>
+<% end %>
+<%= link_to '回到首页 ', lemmas_path %>

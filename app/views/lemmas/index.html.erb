@@ -1,0 +1,24 @@
+<h1>Listing lemmas</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Point</th>
+  </tr>
+
+<% @lemmas.each do |lemma| %>
+  <tr>
+    <td><%=h lemma.title %></td>
+    <td><%=h lemma.body %></td>
+    <td><%=h lemma.point %></td>
+    <td><%= link_to 'Show', lemma %></td>
+    <td><%= link_to 'Edit', edit_lemma_path(lemma) %></td>
+    <td><%= link_to 'Destroy', lemma, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New lemma', new_lemma_path %>

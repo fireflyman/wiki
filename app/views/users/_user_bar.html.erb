@@ -1,0 +1,11 @@
+<div id="user_bar">
+  <% if logged_in? %>
+    <%= link_to "注銷",logout_path, :title => "log in"  %>
+    <%= link_to "歡迎"+current_user.login+"!",current_user %>
+    <%= link_to "用戶中心",current_user %>
+    <%= link_to "用戶列表", users_path if controller_name != "users" %>
+  <% else %>
+    <%= link_to "Login",  login_path, :title => "log in"  %>
+    <%= link_to "Off", signup_path, :title => "create an account"  %>
+  <% end %>
+</div> 

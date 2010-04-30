@@ -1,0 +1,9 @@
+<% title "用戶中心"  %>
+<table>
+  <body>
+    <tr><th>帳號:</th><td><%=link_to @user.login ,[:edit,@user] %></td></tr>
+    <tr><th>郵箱:</th><td><%= @user.email %></td></tr>
+    <tr><th>角色</th><td><%= h @user.role.map(&:to_s) * ',' if @user.role  %></td></tr>
+  </body>
+</table>
+<%= link_to "返回",users_url %>
