@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Authorization::DevelopmentSupport::ChangeSupporter</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Authorization::DevelopmentSupport::ChangeSupporter</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter_rb.html">
+                vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="AbstractAnalyzer.html">
+                AbstractAnalyzer
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Ideas for improvement
+</p>
+<ul>
+<li>Algorithm
+
+<ul>
+<li>Objective function:
+
+<ul>
+<li>affected user count,
+
+</li>
+<li>as specific as possible (roles, privileges)
+
+</li>
+<li>as little changes as necessary
+
+</li>
+</ul>
+</li>
+<li>Modify role, privilege hierarchy
+
+</li>
+<li>Merge, split roles
+
+</li>
+<li>Add privilege to existing rules
+
+</li>
+</ul>
+</li>
+<li>Features
+
+<ul>
+<li>Improve review facts: impact, affected users count
+
+</li>
+<li>group similar candidates: only show abstract methods?
+
+</li>
+<li>restructure GUI layout: more room for analyzing suggestions
+
+</li>
+<li>changelog, previous tests, etc.
+
+</li>
+<li>multiple permissions in tests
+
+</li>
+</ul>
+</li>
+<li>Evaluation of approaches with <a href="Analyzer.html">Analyzer</a>
+algorithms
+
+</li>
+<li><a href="../../Authorization.html">Authorization</a> constraints
+
+</li>
+</ul>
+<p>
+Algorithm
+</p>
+<ul>
+<li>for each candidate
+
+<ul>
+<li>abstract actions: solving first failing test (remove privilege from role)
+
+</li>
+<li>for each abstract action
+
+<ul>
+<li>specific actions: concrete steps (remove privilege from specific role)
+
+</li>
+<li>for each specific action
+
+<ul>
+<li>next if reversal action of previous step
+
+</li>
+<li>apply specific action on candidate
+
+</li>
+<li>save as solution if no failing tests on changed_candidate
+
+</li>
+<li>else: queue as candidate
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>equivalent states
+
+</li>
+</ul>
+<p>
+NOTE:
+</p>
+<ul>
+<li>user.clone needs to clone role_symbols
+
+</li>
+<li>user.role_symbols needs to respond to &lt;&lt;
+
+</li>
+<li>user.login is needed
+
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000080">add_to_approaches_by_action!</a>&nbsp;&nbsp;
+      <a href="#M000077">check_child_candidates!</a>&nbsp;&nbsp;
+      <a href="#M000073">find_approaches_for</a>&nbsp;&nbsp;
+      <a href="#M000076">generate_child_candidates</a>&nbsp;&nbsp;
+      <a href="#M000074">group_approaches</a>&nbsp;&nbsp;
+      <a href="#M000075">next_step</a>&nbsp;&nbsp;
+      <a href="#M000082">relevant_roles</a>&nbsp;&nbsp;
+      <a href="#M000083">relevant_roles</a>&nbsp;&nbsp;
+      <a href="#M000081">remove_from_approaches_by_action!</a>&nbsp;&nbsp;
+      <a href="#M000079">remove_supersets!</a>&nbsp;&nbsp;
+      <a href="#M000078">superset_of_existing?</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="ChangeSupporter/AbstractAction.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::AbstractAction</a><br />
+Class <a href="ChangeSupporter/AbstractCompoundAction.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::AbstractCompoundAction</a><br />
+Class <a href="ChangeSupporter/AddPrivilegeAndAssignRoleToUserAction.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::AddPrivilegeAndAssignRoleToUserAction</a><br />
+Class <a href="ChangeSupporter/Approach.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::Approach</a><br />
+Class <a href="ChangeSupporter/ApproachChecker.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::ApproachChecker</a><br />
+Class <a href="ChangeSupporter/AssignPrivilegeToRoleAction.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::AssignPrivilegeToRoleAction</a><br />
+Class <a href="ChangeSupporter/AssignRoleToUserAction.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::AssignRoleToUserAction</a><br />
+Class <a href="ChangeSupporter/CreateAndAssignRoleToUserAction.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::CreateAndAssignRoleToUserAction</a><br />
+Class <a href="ChangeSupporter/GroupedApproach.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::GroupedApproach</a><br />
+Class <a href="ChangeSupporter/RemovePrivilegeFromRoleAction.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::RemovePrivilegeFromRoleAction</a><br />
+Class <a href="ChangeSupporter/RemoveRoleFromUserAction.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::RemoveRoleFromUserAction</a><br />
+Class <a href="ChangeSupporter/Test.html" class="link">Authorization::DevelopmentSupport::ChangeSupporter::Test</a><br />
+
+    </div>
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Protected Class methods</h3>
+
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
+
+        <div class="method-heading">
+          <a href="#M000083" class="method-signature">
+          <span class="method-name">relevant_roles</span><span class="method-args">(approach)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000083-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 613</span>
+613:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">relevant_roles</span> (<span class="ruby-identifier">approach</span>)
+614:         (<span class="ruby-constant">AnalyzerEngine</span>.<span class="ruby-identifier">relevant_roles</span>(<span class="ruby-identifier">approach</span>.<span class="ruby-identifier">engine</span>, <span class="ruby-identifier">approach</span>.<span class="ruby-identifier">users</span>) <span class="ruby-operator">+</span>
+615:             (<span class="ruby-identifier">approach</span>.<span class="ruby-identifier">engine</span>.<span class="ruby-identifier">roles</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">:new_role_for_change_analyzer</span>) <span class="ruby-operator">?</span>
+616:                [<span class="ruby-constant">AnalyzerEngine</span><span class="ruby-operator">::</span><span class="ruby-constant">Role</span>.<span class="ruby-identifier">for_sym</span>(<span class="ruby-identifier">:new_role_for_change_analyzer</span>, <span class="ruby-identifier">approach</span>.<span class="ruby-identifier">engine</span>)] <span class="ruby-operator">:</span> [])).<span class="ruby-identifier">uniq</span>
+617:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
+
+        <div class="method-heading">
+          <a href="#M000073" class="method-signature">
+          <span class="method-name">find_approaches_for</span><span class="method-args">(options, &amp;tests)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a list of possible approaches for changes to the current
+authorization rules that achieve a given goal. The goal is given as
+permission tests in the block. The instance method <tt>users</tt> is
+available when the block is executed to refer to the then-current users,
+whose roles might have changed as one suggestion.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000073-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 48</span>
+48:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_approaches_for</span> (<span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">tests</span>)
+49:         <span class="ruby-ivar">@prohibited_actions</span> = (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:prohibited_actions</span>] <span class="ruby-operator">||</span> []).<span class="ruby-identifier">to_set</span>
+50: 
+51:         <span class="ruby-ivar">@approaches_by_actions</span> = {}
+52: 
+53:         <span class="ruby-identifier">candidates</span> = []
+54:         <span class="ruby-identifier">suggestions</span> = []
+55:         <span class="ruby-identifier">approach_checker</span> = <span class="ruby-constant">ApproachChecker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">tests</span>)
+56: 
+57:         <span class="ruby-identifier">starting_candidate</span> = <span class="ruby-constant">Approach</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@engine</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:users</span>], [])
+58:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">starting_candidate</span>.<span class="ruby-identifier">check</span>(<span class="ruby-identifier">approach_checker</span>)
+59:           <span class="ruby-identifier">suggestions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">starting_candidate</span>
+60:         <span class="ruby-keyword kw">else</span>
+61:           <span class="ruby-identifier">candidates</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">starting_candidate</span>
+62:         <span class="ruby-keyword kw">end</span>
+63: 
+64:         <span class="ruby-identifier">checked_candidates</span> = <span class="ruby-value">0</span>
+65:         <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">candidates</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">checked_candidates</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">200</span>
+66:           <span class="ruby-identifier">checked_candidates</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">next_step</span>(<span class="ruby-identifier">suggestions</span>, <span class="ruby-identifier">candidates</span>, <span class="ruby-identifier">approach_checker</span>)
+67:         <span class="ruby-keyword kw">end</span>
+68: 
+69:         <span class="ruby-comment cmt"># remove subsets</span>
+70:         <span class="ruby-identifier">suggestions</span>.<span class="ruby-identifier">sort!</span>
+71:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000074" class="method-detail">
+        <a name="M000074"></a>
+
+        <div class="method-heading">
+          <a href="#M000074" class="method-signature">
+          <span class="method-name">group_approaches</span><span class="method-args">(approaches)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an array of GroupedApproaches for the given array of approaches.
+Only groups directly adjacent approaches
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000074-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000074-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 75</span>
+75:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">group_approaches</span> (<span class="ruby-identifier">approaches</span>)
+76:         <span class="ruby-identifier">approaches</span>.<span class="ruby-identifier">each_with_object</span>([]) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">approach</span>, <span class="ruby-identifier">grouped</span><span class="ruby-operator">|</span>
+77:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">grouped</span>.<span class="ruby-identifier">last</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">grouped</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">approach</span>.<span class="ruby-identifier">similar_to</span>(<span class="ruby-identifier">approach</span>)
+78:             <span class="ruby-identifier">grouped</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">similar_approaches</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">approach</span>
+79:           <span class="ruby-keyword kw">else</span>
+80:             <span class="ruby-identifier">grouped</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">GroupedApproach</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">approach</span>)
+81:           <span class="ruby-keyword kw">end</span>
+82:         <span class="ruby-keyword kw">end</span>
+83:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000080" class="method-detail">
+        <a name="M000080"></a>
+
+        <div class="method-heading">
+          <a href="#M000080" class="method-signature">
+          <span class="method-name">add_to_approaches_by_action!</span><span class="method-args">(candidate)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000080-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 598</span>
+598:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_to_approaches_by_action!</span> (<span class="ruby-identifier">candidate</span>)
+599:         <span class="ruby-identifier">candidate</span>.<span class="ruby-identifier">changes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span><span class="ruby-operator">|</span>
+600:           (<span class="ruby-ivar">@approaches_by_actions</span>[<span class="ruby-identifier">action</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">candidate</span>
+601:         <span class="ruby-keyword kw">end</span>
+602:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000077" class="method-detail">
+        <a name="M000077"></a>
+
+        <div class="method-heading">
+          <a href="#M000077" class="method-signature">
+          <span class="method-name">check_child_candidates!</span><span class="method-args">(approach_checker, viable_approaches, candidates, child_candidates)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000077-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000077-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 566</span>
+566:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_child_candidates!</span> (<span class="ruby-identifier">approach_checker</span>, <span class="ruby-identifier">viable_approaches</span>, <span class="ruby-identifier">candidates</span>, <span class="ruby-identifier">child_candidates</span>)
+567:         <span class="ruby-identifier">child_candidates</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child_candidate</span><span class="ruby-operator">|</span>
+568:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">child_candidate</span>.<span class="ruby-identifier">check</span>(<span class="ruby-identifier">approach_checker</span>)
+569:             <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">superset_of_existing?</span>(<span class="ruby-identifier">child_candidate</span>)
+570:               <span class="ruby-identifier">remove_supersets!</span>(<span class="ruby-identifier">viable_approaches</span>, <span class="ruby-identifier">child_candidate</span>)
+571:               <span class="ruby-identifier">viable_approaches</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child_candidate</span>
+572:               <span class="ruby-identifier">add_to_approaches_by_action!</span>(<span class="ruby-identifier">child_candidate</span>)
+573:             <span class="ruby-keyword kw">end</span>
+574:           <span class="ruby-keyword kw">else</span>
+575:             <span class="ruby-identifier">candidates</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child_candidate</span>
+576:           <span class="ruby-keyword kw">end</span>
+577:           <span class="ruby-identifier">child_candidate</span>.<span class="ruby-identifier">freeze</span>
+578:         <span class="ruby-keyword kw">end</span>
+579:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
+
+        <div class="method-heading">
+          <a href="#M000076" class="method-signature">
+          <span class="method-name">generate_child_candidates</span><span class="method-args">(candidate)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000076-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000076-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 550</span>
+550:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate_child_candidates</span> (<span class="ruby-identifier">candidate</span>)
+551:         <span class="ruby-identifier">child_candidates</span> = []
+552:         <span class="ruby-identifier">abstract_actions</span> = <span class="ruby-identifier">candidate</span>.<span class="ruby-identifier">abstract_actions</span>
+553:         <span class="ruby-identifier">abstract_actions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">abstract_action</span><span class="ruby-operator">|</span>
+554:           <span class="ruby-identifier">abstract_action</span>.<span class="ruby-identifier">specific_actions</span>(<span class="ruby-identifier">candidate</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">specific_action</span><span class="ruby-operator">|</span>
+555:             <span class="ruby-identifier">child_candidate</span> = <span class="ruby-identifier">candidate</span>.<span class="ruby-identifier">dup</span>
+556:             <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">specific_action</span>.<span class="ruby-identifier">resembles_any?</span>(<span class="ruby-ivar">@prohibited_actions</span>) <span class="ruby-keyword kw">and</span>
+557:                   <span class="ruby-operator">!</span><span class="ruby-identifier">child_candidate</span>.<span class="ruby-identifier">reverse_of_previous?</span>(<span class="ruby-identifier">specific_action</span>) <span class="ruby-keyword kw">and</span>
+558:                   <span class="ruby-identifier">child_candidate</span>.<span class="ruby-identifier">apply</span>(<span class="ruby-identifier">specific_action</span>)
+559:               <span class="ruby-identifier">child_candidates</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child_candidate</span>
+560:             <span class="ruby-keyword kw">end</span>
+561:           <span class="ruby-keyword kw">end</span>
+562:         <span class="ruby-keyword kw">end</span>
+563:         <span class="ruby-identifier">child_candidates</span>
+564:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
+
+        <div class="method-heading">
+          <a href="#M000075" class="method-signature">
+          <span class="method-name">next_step</span><span class="method-args">(viable_approaches, candidates, approach_checker)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000075-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000075-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 540</span>
+540:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_step</span> (<span class="ruby-identifier">viable_approaches</span>, <span class="ruby-identifier">candidates</span>, <span class="ruby-identifier">approach_checker</span>)
+541:         <span class="ruby-identifier">candidate</span> = <span class="ruby-identifier">candidates</span>.<span class="ruby-identifier">shift</span>
+542: 
+543:         <span class="ruby-identifier">child_candidates</span> = <span class="ruby-identifier">generate_child_candidates</span>(<span class="ruby-identifier">candidate</span>)
+544:         <span class="ruby-identifier">check_child_candidates!</span>(<span class="ruby-identifier">approach_checker</span>, <span class="ruby-identifier">viable_approaches</span>, <span class="ruby-identifier">candidates</span>, <span class="ruby-identifier">child_candidates</span>)
+545: 
+546:         <span class="ruby-identifier">candidates</span>.<span class="ruby-identifier">sort!</span>
+547:         <span class="ruby-identifier">child_candidates</span>.<span class="ruby-identifier">length</span>
+548:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
+
+        <div class="method-heading">
+          <a href="#M000082" class="method-signature">
+          <span class="method-name">relevant_roles</span><span class="method-args">(approach)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000082-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 610</span>
+610:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">relevant_roles</span> (<span class="ruby-identifier">approach</span>)
+611:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">relevant_roles</span>(<span class="ruby-identifier">approach</span>)
+612:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
+
+        <div class="method-heading">
+          <a href="#M000081" class="method-signature">
+          <span class="method-name">remove_from_approaches_by_action!</span><span class="method-args">(candidate)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000081-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 604</span>
+604:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_from_approaches_by_action!</span> (<span class="ruby-identifier">candidate</span>)
+605:         <span class="ruby-identifier">candidate</span>.<span class="ruby-identifier">changes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span><span class="ruby-operator">|</span>
+606:           (<span class="ruby-ivar">@approaches_by_actions</span>[<span class="ruby-identifier">action</span>] <span class="ruby-operator">||=</span> []).<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">candidate</span>)
+607:         <span class="ruby-keyword kw">end</span>
+608:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000079" class="method-detail">
+        <a name="M000079"></a>
+
+        <div class="method-heading">
+          <a href="#M000079" class="method-signature">
+          <span class="method-name">remove_supersets!</span><span class="method-args">(existing, candidate)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000079-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000079-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 587</span>
+587:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_supersets!</span> (<span class="ruby-identifier">existing</span>, <span class="ruby-identifier">candidate</span>)
+588:         <span class="ruby-identifier">candidate</span>.<span class="ruby-identifier">changes</span>.<span class="ruby-identifier">inject</span>([]) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>, <span class="ruby-identifier">action</span><span class="ruby-operator">|</span>
+589:           <span class="ruby-identifier">memo</span> <span class="ruby-operator">+=</span> (<span class="ruby-ivar">@approaches_by_actions</span>[<span class="ruby-identifier">action</span>] <span class="ruby-operator">||=</span> []).<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">approach</span><span class="ruby-operator">|</span>
+590:             <span class="ruby-identifier">candidate</span>.<span class="ruby-identifier">subset?</span>(<span class="ruby-identifier">approach</span>)
+591:           <span class="ruby-keyword kw">end</span>
+592:         <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">approach</span><span class="ruby-operator">|</span>
+593:           <span class="ruby-identifier">existing</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">approach</span>)
+594:           <span class="ruby-identifier">remove_from_approaches_by_action!</span>(<span class="ruby-identifier">approach</span>)
+595:         <span class="ruby-keyword kw">end</span>
+596:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000078" class="method-detail">
+        <a name="M000078"></a>
+
+        <div class="method-heading">
+          <a href="#M000078" class="method-signature">
+          <span class="method-name">superset_of_existing?</span><span class="method-args">(candidate)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000078-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000078-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/development_support/change_supporter.rb, line 581</span>
+581:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">superset_of_existing?</span> (<span class="ruby-identifier">candidate</span>)
+582:         <span class="ruby-identifier">candidate</span>.<span class="ruby-identifier">changes</span>.<span class="ruby-identifier">any?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span><span class="ruby-operator">|</span>
+583:           (<span class="ruby-ivar">@approaches_by_actions</span>[<span class="ruby-identifier">action</span>] <span class="ruby-operator">||=</span> []).<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">approach</span><span class="ruby-operator">|</span> <span class="ruby-identifier">approach</span>.<span class="ruby-identifier">subset?</span>(<span class="ruby-identifier">candidate</span>)}
+584:         <span class="ruby-keyword kw">end</span>
+585:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

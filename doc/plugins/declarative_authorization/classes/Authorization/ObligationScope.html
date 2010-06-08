@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Authorization::ObligationScope</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Authorization::ObligationScope</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope_rb.html">
+                vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                (Rails.version &lt; &quot;3&quot; ? ActiveRecord::NamedScope::Scope : ActiveRecord::Relation)
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+The <tt><a href="ObligationScope.html">ObligationScope</a></tt> class
+parses any number of obligations into joins and conditions.
+</p>
+<p>
+In <tt><a href="ObligationScope.html">ObligationScope</a></tt> parlance,
+&quot;association paths&quot; are one-dimensional arrays in which each
+element represents an attribute or association (or &quot;step&quot;), and
+&quot;leads&quot; to the next step in the association path.
+</p>
+<p>
+Suppose we have this path defined in the context of model Foo: +{ :bar
+=&gt; { :baz =&gt; { :foo =&gt; { :attr =&gt; is { user } } } } }+
+</p>
+<p>
+To parse this path, <tt><a
+href="ObligationScope.html">ObligationScope</a></tt> evaluates each step in
+the context of the preceding step. The first step is evaluated in the
+context of the parent <a href="ObligationScope.html#M000219">scope</a>, the
+second step is evaluated in the context of the first, and so forth. Every
+time we encounter a step representing an association, we make note of the
+fact by storing the path (up to that point), assigning it a table alias
+intended to match the one that will eventually be chosen by ActiveRecord
+when executing the <tt>find</tt> method on the <a
+href="ObligationScope.html#M000219">scope</a>.
+</p>
+<p>
++@<a href="ObligationScope.html#M000234">table_aliases</a> = {
+</p>
+<pre>
+  [] =&gt; 'foos',
+  [:bar] =&gt; 'bars',
+  [:bar, :baz] =&gt; 'bazzes',
+  [:bar, :baz, :foo] =&gt; 'foos_bazzes' # Alias avoids collisions with 'foos' (already used)
+</pre>
+<p>
+}+
+</p>
+<p>
+At the &quot;end&quot; of each path, we expect to find a comparison
+operation of some kind, generally comparing an attribute of the most recent
+association with some other value (such as an ID, constant, or array of
+values). When we encounter a step representing a comparison, we make note
+of the fact by storing the path (up to that point) and the comparison
+operation together. (Note that individual obligations&#8217; conditions are
+kept separate, to allow their conditions to be OR&#8216;ed together in the
+generated <a href="ObligationScope.html#M000219">scope</a> options.)
+</p>
+<p>
++@<a
+href="ObligationScope.html#M000232">obligation_conditions</a>[&lt;obligation&gt;][[:bar,
+:baz, :foo]] = [
+</p>
+<pre>
+  [ :attr, :is, &lt;user.id&gt; ]
+</pre>
+<p>
+]+
+</p>
+<p>
+TODO update doc for Relations: After successfully parsing an obligation,
+all of the stored paths and conditions are converted into <a
+href="ObligationScope.html#M000219">scope</a> options (stored in
+<tt>proxy_options</tt> as +:joins+ and +:conditions+). The resulting <a
+href="ObligationScope.html#M000219">scope</a> may then be used to find all
+scoped objects for which at least one of the parsed obligations is fully
+met.
+</p>
+<p>
++@proxy_options[:joins] = { :bar =&gt; { :baz =&gt; :foo } }
+@proxy_options[:conditions] = [ &#8216;foos_bazzes.attr =
+:foos_bazzes__id_0&#8217;, { :foos_bazzes__id_0 =&gt; 1 } ]+
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000225">add_obligation_condition_for</a>&nbsp;&nbsp;
+      <a href="#M000226">add_obligation_join_for</a>&nbsp;&nbsp;
+      <a href="#M000236">attribute_value</a>&nbsp;&nbsp;
+      <a href="#M000223">finder_options</a>&nbsp;&nbsp;
+      <a href="#M000224">follow_comparison</a>&nbsp;&nbsp;
+      <a href="#M000221">follow_path</a>&nbsp;&nbsp;
+      <a href="#M000239">join_to_path</a>&nbsp;&nbsp;
+      <a href="#M000230">map_reflection_for</a>&nbsp;&nbsp;
+      <a href="#M000231">map_table_alias_for</a>&nbsp;&nbsp;
+      <a href="#M000227">model_for</a>&nbsp;&nbsp;
+      <a href="#M000218">new</a>&nbsp;&nbsp;
+      <a href="#M000232">obligation_conditions</a>&nbsp;&nbsp;
+      <a href="#M000220">parse!</a>&nbsp;&nbsp;
+      <a href="#M000238">path_to_join</a>&nbsp;&nbsp;
+      <a href="#M000235">rebuild_condition_options!</a>&nbsp;&nbsp;
+      <a href="#M000237">rebuild_join_options!</a>&nbsp;&nbsp;
+      <a href="#M000228">reflection_for</a>&nbsp;&nbsp;
+      <a href="#M000233">reflections</a>&nbsp;&nbsp;
+      <a href="#M000219">scope</a>&nbsp;&nbsp;
+      <a href="#M000229">table_alias_for</a>&nbsp;&nbsp;
+      <a href="#M000234">table_aliases</a>&nbsp;&nbsp;
+      <a href="#M000222">top_level_model</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000218" class="method-detail">
+        <a name="M000218"></a>
+
+        <div class="method-heading">
+          <a href="#M000218" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(model, options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000218-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000218-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 46</span>
+46:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">model</span>, <span class="ruby-identifier">options</span>)
+47:       <span class="ruby-ivar">@finder_options</span> = {}
+48:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value str">&quot;3&quot;</span>
+49:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">model</span>, <span class="ruby-identifier">options</span>)
+50:       <span class="ruby-keyword kw">else</span>
+51:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">model</span>, <span class="ruby-identifier">model</span>.<span class="ruby-identifier">table_name</span>)
+52:       <span class="ruby-keyword kw">end</span>
+53:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000220" class="method-detail">
+        <a name="M000220"></a>
+
+        <div class="method-heading">
+          <a href="#M000220" class="method-signature">
+          <span class="method-name">parse!</span><span class="method-args">( obligation )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Consumes the given obligation, converting it into <a
+href="ObligationScope.html#M000219">scope</a> join and condition options.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000220-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000220-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 65</span>
+65:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse!</span>( <span class="ruby-identifier">obligation</span> )
+66:       <span class="ruby-ivar">@current_obligation</span> = <span class="ruby-identifier">obligation</span>
+67:       <span class="ruby-ivar">@join_table_joins</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+68:       <span class="ruby-identifier">obligation_conditions</span>[<span class="ruby-ivar">@current_obligation</span>] <span class="ruby-operator">||=</span> {}
+69:       <span class="ruby-identifier">follow_path</span>( <span class="ruby-identifier">obligation</span> )
+70: 
+71:       <span class="ruby-identifier">rebuild_condition_options!</span>
+72:       <span class="ruby-identifier">rebuild_join_options!</span>
+73:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000219" class="method-detail">
+        <a name="M000219"></a>
+
+        <div class="method-heading">
+          <a href="#M000219" class="method-signature">
+          <span class="method-name">scope</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000219-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000219-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 55</span>
+55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scope</span>
+56:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value str">&quot;3&quot;</span>
+57:         <span class="ruby-keyword kw">self</span>
+58:       <span class="ruby-keyword kw">else</span>
+59:         <span class="ruby-comment cmt"># for Rails &lt; 3: scope, after setting proxy_options</span>
+60:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">scoped</span>(<span class="ruby-ivar">@finder_options</span>)
+61:       <span class="ruby-keyword kw">end</span>
+62:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000225" class="method-detail">
+        <a name="M000225"></a>
+
+        <div class="method-heading">
+          <a href="#M000225" class="method-signature">
+          <span class="method-name">add_obligation_condition_for</span><span class="method-args">( path, expression )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds the given expression to the current obligation&#8216;s indicated
+path&#8216;s conditions.
+</p>
+<p>
+Condition expressions must follow the format +[ &lt;attribute&gt;,
+&lt;operator&gt;, &lt;value&gt; ]+.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000225-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000225-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 128</span>
+128:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_obligation_condition_for</span>( <span class="ruby-identifier">path</span>, <span class="ruby-identifier">expression</span> )
+129:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid expression #{expression.inspect}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">expression</span>.<span class="ruby-identifier">is_a?</span>( <span class="ruby-constant">Array</span> ) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">expression</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span>
+130:       <span class="ruby-identifier">add_obligation_join_for</span>( <span class="ruby-identifier">path</span> )
+131:       <span class="ruby-identifier">obligation_conditions</span>[<span class="ruby-ivar">@current_obligation</span>] <span class="ruby-operator">||=</span> {}
+132:       ( <span class="ruby-identifier">obligation_conditions</span>[<span class="ruby-ivar">@current_obligation</span>][<span class="ruby-identifier">path</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span> ) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">expression</span>
+133:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000226" class="method-detail">
+        <a name="M000226"></a>
+
+        <div class="method-heading">
+          <a href="#M000226" class="method-signature">
+          <span class="method-name">add_obligation_join_for</span><span class="method-args">( path )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds the given path to the list of obligation joins, if we haven&#8216;t
+seen it before.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000226-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000226-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 136</span>
+136:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_obligation_join_for</span>( <span class="ruby-identifier">path</span> )
+137:       <span class="ruby-identifier">map_reflection_for</span>( <span class="ruby-identifier">path</span> ) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflections</span>[<span class="ruby-identifier">path</span>].<span class="ruby-identifier">nil?</span>
+138:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000236" class="method-detail">
+        <a name="M000236"></a>
+
+        <div class="method-heading">
+          <a href="#M000236" class="method-signature">
+          <span class="method-name">attribute_value</span><span class="method-args">(value)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000236-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 286</span>
+286:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attribute_value</span> (<span class="ruby-identifier">value</span>)
+287:       <span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:descends_from_active_record?</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">descends_from_active_record?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">||</span>
+288:         <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:descends_from_active_record?</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">class</span>.<span class="ruby-identifier">descends_from_active_record?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">map</span>( <span class="ruby-operator">&amp;</span><span class="ruby-identifier">:id</span> ) <span class="ruby-operator">||</span>
+289:         <span class="ruby-identifier">value</span>
+290:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
+
+        <div class="method-heading">
+          <a href="#M000223" class="method-signature">
+          <span class="method-name">finder_options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000223-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000223-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 109</span>
+109:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finder_options</span>
+110:       <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value str">&quot;3&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@proxy_options</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@finder_options</span>
+111:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000224" class="method-detail">
+        <a name="M000224"></a>
+
+        <div class="method-heading">
+          <a href="#M000224" class="method-signature">
+          <span class="method-name">follow_comparison</span><span class="method-args">( steps, past_steps, attribute )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+At the end of every association path, we expect to see a comparison of some
+kind; for example, +:attr =&gt; [ :is, :value ]+.
+</p>
+<p>
+This method parses the comparison and creates an obligation condition from
+it.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000224-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000224-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 117</span>
+117:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">follow_comparison</span>( <span class="ruby-identifier">steps</span>, <span class="ruby-identifier">past_steps</span>, <span class="ruby-identifier">attribute</span> )
+118:       <span class="ruby-identifier">operator</span> = <span class="ruby-identifier">steps</span>[<span class="ruby-value">0</span>]
+119:       <span class="ruby-identifier">value</span> = <span class="ruby-identifier">steps</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+120:       <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>[<span class="ruby-value">0</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+121: 
+122:       <span class="ruby-identifier">add_obligation_condition_for</span>( <span class="ruby-identifier">past_steps</span>, [<span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">operator</span>, <span class="ruby-identifier">value</span>] )
+123:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
+
+        <div class="method-heading">
+          <a href="#M000221" class="method-signature">
+          <span class="method-name">follow_path</span><span class="method-args">( steps, past_steps = [] )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parses the next step in the association path. If it&#8216;s an association,
+we advance down the path. Otherwise, it&#8216;s an attribute, and we need
+to evaluate it as a comparison operation.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000221-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000221-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 79</span>
+79:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">follow_path</span>( <span class="ruby-identifier">steps</span>, <span class="ruby-identifier">past_steps</span> = [] )
+80:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">steps</span>.<span class="ruby-identifier">is_a?</span>( <span class="ruby-constant">Hash</span> )
+81:         <span class="ruby-identifier">steps</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">step</span>, <span class="ruby-identifier">next_steps</span><span class="ruby-operator">|</span>
+82:           <span class="ruby-identifier">path_to_this_point</span> = [<span class="ruby-identifier">past_steps</span>, <span class="ruby-identifier">step</span>].<span class="ruby-identifier">flatten</span>
+83:           <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">reflection_for</span>( <span class="ruby-identifier">path_to_this_point</span> ) <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">nil</span>
+84:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection</span>
+85:             <span class="ruby-identifier">follow_path</span>( <span class="ruby-identifier">next_steps</span>, <span class="ruby-identifier">path_to_this_point</span> )
+86:           <span class="ruby-keyword kw">else</span>
+87:             <span class="ruby-identifier">follow_comparison</span>( <span class="ruby-identifier">next_steps</span>, <span class="ruby-identifier">past_steps</span>, <span class="ruby-identifier">step</span> )
+88:           <span class="ruby-keyword kw">end</span>
+89:         <span class="ruby-keyword kw">end</span>
+90:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">steps</span>.<span class="ruby-identifier">is_a?</span>( <span class="ruby-constant">Array</span> ) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">steps</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+91:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection_for</span>( <span class="ruby-identifier">past_steps</span> )
+92:           <span class="ruby-identifier">follow_comparison</span>( <span class="ruby-identifier">steps</span>, <span class="ruby-identifier">past_steps</span>, <span class="ruby-identifier">:id</span> )
+93:         <span class="ruby-keyword kw">else</span>
+94:           <span class="ruby-identifier">follow_comparison</span>( <span class="ruby-identifier">steps</span>, <span class="ruby-identifier">past_steps</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>], <span class="ruby-identifier">past_steps</span>[<span class="ruby-value">-1</span>] )
+95:         <span class="ruby-keyword kw">end</span>
+96:       <span class="ruby-keyword kw">else</span>
+97:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid obligation path #{[past_steps, steps].inspect}&quot;</span>
+98:       <span class="ruby-keyword kw">end</span>
+99:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000239" class="method-detail">
+        <a name="M000239"></a>
+
+        <div class="method-heading">
+          <a href="#M000239" class="method-signature">
+          <span class="method-name">join_to_path</span><span class="method-args">(join)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000239-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000239-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 340</span>
+340:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">join_to_path</span> (<span class="ruby-identifier">join</span>)
+341:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">join</span>
+342:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Symbol</span>
+343:         [<span class="ruby-identifier">join</span>]
+344:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+345:         [<span class="ruby-identifier">join</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">first</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">join_to_path</span>(<span class="ruby-identifier">join</span>[<span class="ruby-identifier">join</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">first</span>])
+346:       <span class="ruby-keyword kw">end</span>
+347:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000230" class="method-detail">
+        <a name="M000230"></a>
+
+        <div class="method-heading">
+          <a href="#M000230" class="method-signature">
+          <span class="method-name">map_reflection_for</span><span class="method-args">( path )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Attempts to map a reflection for the given path. Raises if already defined.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000230-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000230-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 165</span>
+165:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">map_reflection_for</span>( <span class="ruby-identifier">path</span> )
+166:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;reflection for #{path.inspect} already exists&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">reflections</span>[<span class="ruby-identifier">path</span>].<span class="ruby-identifier">nil?</span>
+167: 
+168:       <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-identifier">top_level_model</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">begin</span>
+169:         <span class="ruby-identifier">parent</span> = <span class="ruby-identifier">reflection_for</span>( <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>] )
+170:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">parent</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:proxy_reflection</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:klass</span>)
+171:           <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">reflect_on_association</span>( <span class="ruby-identifier">path</span>.<span class="ruby-identifier">last</span> )
+172:         <span class="ruby-keyword kw">else</span>
+173:           <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">reflect_on_association</span>( <span class="ruby-identifier">path</span>.<span class="ruby-identifier">last</span> )
+174:         <span class="ruby-keyword kw">end</span>
+175:       <span class="ruby-keyword kw">rescue</span>
+176:         <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">reflect_on_association</span>( <span class="ruby-identifier">path</span>.<span class="ruby-identifier">last</span> )
+177:       <span class="ruby-keyword kw">end</span>
+178:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid path #{path.inspect}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">nil?</span>
+179: 
+180:       <span class="ruby-identifier">reflections</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-identifier">reflection</span>
+181:       <span class="ruby-identifier">map_table_alias_for</span>( <span class="ruby-identifier">path</span> )  <span class="ruby-comment cmt"># Claim a table alias for the path.</span>
+182: 
+183:       <span class="ruby-comment cmt"># Claim alias for join table</span>
+184:       <span class="ruby-comment cmt"># TODO change how this is checked</span>
+185:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:proxy_scope</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Reflection</span><span class="ruby-operator">::</span><span class="ruby-constant">ThroughReflection</span>)
+186:         <span class="ruby-identifier">join_table_path</span> = <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>] <span class="ruby-operator">+</span> [<span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:through</span>]]
+187:         <span class="ruby-identifier">reflection_for</span>(<span class="ruby-identifier">join_table_path</span>, <span class="ruby-keyword kw">true</span>)
+188:       <span class="ruby-keyword kw">end</span>
+189:       
+190:       <span class="ruby-identifier">reflection</span>
+191:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000231" class="method-detail">
+        <a name="M000231"></a>
+
+        <div class="method-heading">
+          <a href="#M000231" class="method-signature">
+          <span class="method-name">map_table_alias_for</span><span class="method-args">( path )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Attempts to map a table alias for the given path. Raises if already
+defined.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000231-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000231-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 194</span>
+194:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">map_table_alias_for</span>( <span class="ruby-identifier">path</span> )
+195:       <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;table alias for #{path.inspect} already exists&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">table_aliases</span>[<span class="ruby-identifier">path</span>].<span class="ruby-identifier">nil?</span>
+196:       
+197:       <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">reflection_for</span>( <span class="ruby-identifier">path</span> )
+198:       <span class="ruby-identifier">table_alias</span> = <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">table_name</span>
+199:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">table_aliases</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">include?</span>( <span class="ruby-identifier">table_alias</span> )
+200:         <span class="ruby-identifier">max_length</span> = <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">active_record</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">table_alias_length</span>
+201:         <span class="ruby-comment cmt"># Rails seems to pluralize reflection names</span>
+202:         <span class="ruby-identifier">table_alias</span> = <span class="ruby-node">&quot;#{reflection.name.to_s.pluralize}_#{reflection.active_record.table_name}&quot;</span>.<span class="ruby-identifier">to</span>(<span class="ruby-identifier">max_length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+203:       <span class="ruby-keyword kw">end</span>            
+204:       <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">table_aliases</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">include?</span>( <span class="ruby-identifier">table_alias</span> )
+205:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">table_alias</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\w(_\d+?)$/</span>
+206:           <span class="ruby-identifier">table_index</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">succ</span>
+207:           <span class="ruby-identifier">table_alias</span> = <span class="ruby-node">&quot;#{table_alias[0..-(table_index.length+1)]}_#{table_index}&quot;</span>
+208:         <span class="ruby-keyword kw">else</span>
+209:           <span class="ruby-identifier">table_alias</span> = <span class="ruby-node">&quot;#{table_alias[0..(max_length-3)]}_2&quot;</span> 
+210:         <span class="ruby-keyword kw">end</span>
+211:       <span class="ruby-keyword kw">end</span>
+212:       <span class="ruby-identifier">table_aliases</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-identifier">table_alias</span>
+213:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000227" class="method-detail">
+        <a name="M000227"></a>
+
+        <div class="method-heading">
+          <a href="#M000227" class="method-signature">
+          <span class="method-name">model_for</span><span class="method-args">(path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the model associated with the given path.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000227-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000227-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 141</span>
+141:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">model_for</span> (<span class="ruby-identifier">path</span>)
+142:       <span class="ruby-identifier">reflection</span> = <span class="ruby-identifier">reflection_for</span>(<span class="ruby-identifier">path</span>)
+143:       
+144:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:proxy_reflection</span>)
+145:         <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">proxy_reflection</span>.<span class="ruby-identifier">klass</span>
+146:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:klass</span>)
+147:         <span class="ruby-identifier">reflection</span>.<span class="ruby-identifier">klass</span>
+148:       <span class="ruby-keyword kw">else</span>
+149:         <span class="ruby-identifier">reflection</span>
+150:       <span class="ruby-keyword kw">end</span>
+151:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000232" class="method-detail">
+        <a name="M000232"></a>
+
+        <div class="method-heading">
+          <a href="#M000232" class="method-signature">
+          <span class="method-name">obligation_conditions</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a hash mapping obligations to zero or more condition path sets.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000232-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 216</span>
+216:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obligation_conditions</span>
+217:       <span class="ruby-ivar">@obligation_conditions</span> <span class="ruby-operator">||=</span> {}
+218:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000238" class="method-detail">
+        <a name="M000238"></a>
+
+        <div class="method-heading">
+          <a href="#M000238" class="method-signature">
+          <span class="method-name">path_to_join</span><span class="method-args">(path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000238-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 327</span>
+327:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path_to_join</span> (<span class="ruby-identifier">path</span>)
+328:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">length</span>
+329:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-keyword kw">nil</span>
+330:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>]
+331:       <span class="ruby-keyword kw">else</span>
+332:         <span class="ruby-identifier">hash</span> = { <span class="ruby-identifier">path</span>[<span class="ruby-value">-2</span>] =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">-1</span>] }
+333:         <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-3</span>].<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">elem</span><span class="ruby-operator">|</span>
+334:           <span class="ruby-identifier">hash</span> = { <span class="ruby-identifier">elem</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span> }
+335:         <span class="ruby-keyword kw">end</span>
+336:         <span class="ruby-identifier">hash</span>
+337:       <span class="ruby-keyword kw">end</span>
+338:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000235" class="method-detail">
+        <a name="M000235"></a>
+
+        <div class="method-heading">
+          <a href="#M000235" class="method-signature">
+          <span class="method-name">rebuild_condition_options!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parses all of the defined obligation conditions and defines the <a
+href="ObligationScope.html#M000219">scope</a>&#8216;s :conditions option.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000235-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 232</span>
+232:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rebuild_condition_options!</span>
+233:       <span class="ruby-identifier">conds</span> = []
+234:       <span class="ruby-identifier">binds</span> = {}
+235:       <span class="ruby-identifier">used_paths</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+236:       <span class="ruby-identifier">delete_paths</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+237:       <span class="ruby-identifier">obligation_conditions</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">array</span>, <span class="ruby-identifier">obligation_index</span><span class="ruby-operator">|</span>
+238:         <span class="ruby-identifier">obligation</span>, <span class="ruby-identifier">conditions</span> = <span class="ruby-identifier">array</span>
+239:         <span class="ruby-identifier">obligation_conds</span> = []
+240:         <span class="ruby-identifier">conditions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span>, <span class="ruby-identifier">expressions</span><span class="ruby-operator">|</span>
+241:           <span class="ruby-identifier">model</span> = <span class="ruby-identifier">model_for</span>( <span class="ruby-identifier">path</span> )
+242:           <span class="ruby-identifier">table_alias</span> = <span class="ruby-identifier">table_alias_for</span>(<span class="ruby-identifier">path</span>)
+243:           <span class="ruby-identifier">parent_model</span> = (<span class="ruby-identifier">path</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">model_for</span>(<span class="ruby-identifier">path</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]) <span class="ruby-operator">:</span> <span class="ruby-identifier">top_level_model</span>)
+244:           <span class="ruby-identifier">expressions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">expression</span><span class="ruby-operator">|</span>
+245:             <span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">operator</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">expression</span>
+246:             <span class="ruby-comment cmt"># prevent unnecessary joins:</span>
+247:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attribute</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:id</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">operator</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:is</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">parent_model</span>.<span class="ruby-identifier">columns_hash</span>[<span class="ruby-node">&quot;#{path.last}_id&quot;</span>]
+248:               <span class="ruby-identifier">attribute_name</span> = <span class="ruby-node">&quot;#{path.last}_id&quot;</span><span class="ruby-node">&quot;#{path.last}_id&quot;</span>
+249:               <span class="ruby-identifier">attribute_table_alias</span> = <span class="ruby-identifier">table_alias_for</span>(<span class="ruby-identifier">path</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>])
+250:               <span class="ruby-identifier">used_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]
+251:               <span class="ruby-identifier">delete_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>
+252:             <span class="ruby-keyword kw">else</span>
+253:               <span class="ruby-identifier">attribute_name</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">columns_hash</span>[<span class="ruby-node">&quot;#{attribute}_id&quot;</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">&quot;#{attribute}_id&quot;</span><span class="ruby-node">&quot;#{attribute}_id&quot;</span> <span class="ruby-operator">||</span>
+254:                                <span class="ruby-identifier">model</span>.<span class="ruby-identifier">columns_hash</span>[<span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">to_s</span>]    <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">attribute</span> <span class="ruby-operator">||</span>
+255:                                <span class="ruby-identifier">:id</span>
+256:               <span class="ruby-identifier">attribute_table_alias</span> = <span class="ruby-identifier">table_alias</span>
+257:               <span class="ruby-identifier">used_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>
+258:             <span class="ruby-keyword kw">end</span>
+259:             <span class="ruby-identifier">bindvar</span> = <span class="ruby-node">&quot;#{attribute_table_alias}__#{attribute_name}_#{obligation_index}&quot;</span>.<span class="ruby-identifier">to_sym</span>
+260: 
+261:             <span class="ruby-identifier">sql_attribute</span> = <span class="ruby-node">&quot;#{parent_model.connection.quote_table_name(attribute_table_alias)}.&quot;</span> <span class="ruby-operator">+</span>
+262:                 <span class="ruby-node">&quot;#{parent_model.connection.quote_table_name(attribute_name)}&quot;</span>
+263:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> [<span class="ruby-identifier">:is</span>, <span class="ruby-identifier">:is_not</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">operator</span>)
+264:               <span class="ruby-identifier">obligation_conds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{sql_attribute} IS #{[:contains, :is].include?(operator) ? '' : 'NOT '}NULL&quot;</span>
+265:             <span class="ruby-keyword kw">else</span>
+266:               <span class="ruby-identifier">attribute_operator</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">operator</span>
+267:                                    <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:contains</span>, <span class="ruby-identifier">:is</span>             <span class="ruby-keyword kw">then</span> <span class="ruby-node">&quot;= :#{bindvar}&quot;</span>
+268:                                    <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:does_not_contain</span>, <span class="ruby-identifier">:is_not</span> <span class="ruby-keyword kw">then</span> <span class="ruby-node">&quot;&lt;&gt; :#{bindvar}&quot;</span>
+269:                                    <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:is_in</span>, <span class="ruby-identifier">:intersects_with</span>   <span class="ruby-keyword kw">then</span> <span class="ruby-node">&quot;IN (:#{bindvar})&quot;</span>
+270:                                    <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:is_not_in</span>                 <span class="ruby-keyword kw">then</span> <span class="ruby-node">&quot;NOT IN (:#{bindvar})&quot;</span>
+271:                                    <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-node">&quot;Unknown operator: #{operator}&quot;</span>
+272:                                    <span class="ruby-keyword kw">end</span>
+273:               <span class="ruby-identifier">obligation_conds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{sql_attribute} #{attribute_operator}&quot;</span>
+274:               <span class="ruby-identifier">binds</span>[<span class="ruby-identifier">bindvar</span>] = <span class="ruby-identifier">attribute_value</span>(<span class="ruby-identifier">value</span>)
+275:             <span class="ruby-keyword kw">end</span>
+276:           <span class="ruby-keyword kw">end</span>
+277:         <span class="ruby-keyword kw">end</span>
+278:         <span class="ruby-identifier">obligation_conds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;1=1&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obligation_conds</span>.<span class="ruby-identifier">empty?</span>
+279:         <span class="ruby-identifier">conds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;(#{obligation_conds.join(' AND ')})&quot;</span>
+280:       <span class="ruby-keyword kw">end</span>
+281:       (<span class="ruby-identifier">delete_paths</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">used_paths</span>).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span> <span class="ruby-identifier">reflections</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">path</span>)}
+282: 
+283:       <span class="ruby-identifier">finder_options</span>[<span class="ruby-identifier">:conditions</span>] = [ <span class="ruby-identifier">conds</span>.<span class="ruby-identifier">join</span>( <span class="ruby-value str">&quot; OR &quot;</span> ), <span class="ruby-identifier">binds</span> ]
+284:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000237" class="method-detail">
+        <a name="M000237"></a>
+
+        <div class="method-heading">
+          <a href="#M000237" class="method-signature">
+          <span class="method-name">rebuild_join_options!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parses all of the defined obligation joins and defines the <a
+href="ObligationScope.html#M000219">scope</a>&#8216;s :joins or :includes
+option. TODO: Support non-linear association paths. Right now, we just
+break down the longest path parsed.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000237-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 294</span>
+294:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rebuild_join_options!</span>
+295:       <span class="ruby-identifier">joins</span> = (<span class="ruby-identifier">finder_options</span>[<span class="ruby-identifier">:joins</span>] <span class="ruby-operator">||</span> []) <span class="ruby-operator">+</span> (<span class="ruby-identifier">finder_options</span>[<span class="ruby-identifier">:includes</span>] <span class="ruby-operator">||</span> [])
+296: 
+297:       <span class="ruby-identifier">reflections</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+298:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@join_table_joins</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">path</span>)
+299: 
+300:         <span class="ruby-identifier">existing_join</span> = <span class="ruby-identifier">joins</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">join</span><span class="ruby-operator">|</span>
+301:           <span class="ruby-identifier">existing_path</span> = <span class="ruby-identifier">join_to_path</span>(<span class="ruby-identifier">join</span>)
+302:           <span class="ruby-identifier">min_length</span> = [<span class="ruby-identifier">existing_path</span>.<span class="ruby-identifier">length</span>, <span class="ruby-identifier">path</span>.<span class="ruby-identifier">length</span>].<span class="ruby-identifier">min</span>
+303:           <span class="ruby-identifier">existing_path</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">min_length</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">min_length</span>)
+304:         <span class="ruby-keyword kw">end</span>
+305: 
+306:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">existing_join</span>
+307:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">join_to_path</span>(<span class="ruby-identifier">existing_join</span>).<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">length</span>
+308:             <span class="ruby-identifier">joins</span>[<span class="ruby-identifier">joins</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">existing_join</span>)] = <span class="ruby-identifier">path_to_join</span>(<span class="ruby-identifier">path</span>)
+309:           <span class="ruby-keyword kw">end</span>
+310:         <span class="ruby-keyword kw">else</span>
+311:           <span class="ruby-identifier">joins</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path_to_join</span>(<span class="ruby-identifier">path</span>)
+312:         <span class="ruby-keyword kw">end</span>
+313:       <span class="ruby-keyword kw">end</span>
+314: 
+315:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">obligation_conditions</span>.<span class="ruby-identifier">length</span>
+316:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span>
+317:         <span class="ruby-comment cmt"># No obligation conditions means we don't have to mess with joins or includes at all.</span>
+318:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">then</span>
+319:         <span class="ruby-identifier">finder_options</span>[<span class="ruby-identifier">:joins</span>] = <span class="ruby-identifier">joins</span>
+320:         <span class="ruby-identifier">finder_options</span>.<span class="ruby-identifier">delete</span>( <span class="ruby-identifier">:include</span> )
+321:       <span class="ruby-keyword kw">else</span>
+322:         <span class="ruby-identifier">finder_options</span>.<span class="ruby-identifier">delete</span>( <span class="ruby-identifier">:joins</span> )
+323:         <span class="ruby-identifier">finder_options</span>[<span class="ruby-identifier">:include</span>] = <span class="ruby-identifier">joins</span>
+324:       <span class="ruby-keyword kw">end</span>
+325:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000228" class="method-detail">
+        <a name="M000228"></a>
+
+        <div class="method-heading">
+          <a href="#M000228" class="method-signature">
+          <span class="method-name">reflection_for</span><span class="method-args">(path, for_join_table_only = false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the reflection corresponding to the given path.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000228-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000228-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 154</span>
+154:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reflection_for</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">for_join_table_only</span> = <span class="ruby-keyword kw">false</span>)
+155:       <span class="ruby-ivar">@join_table_joins</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">for_join_table_only</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reflections</span>[<span class="ruby-identifier">path</span>]
+156:       <span class="ruby-identifier">reflections</span>[<span class="ruby-identifier">path</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">map_reflection_for</span>( <span class="ruby-identifier">path</span> )
+157:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000233" class="method-detail">
+        <a name="M000233"></a>
+
+        <div class="method-heading">
+          <a href="#M000233" class="method-signature">
+          <span class="method-name">reflections</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a hash mapping paths to <a
+href="ObligationScope.html#M000233">reflections</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000233-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000233-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 221</span>
+221:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reflections</span>
+222:       <span class="ruby-comment cmt"># lets try to get the order of joins right</span>
+223:       <span class="ruby-ivar">@reflections</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">OrderedHash</span>.<span class="ruby-identifier">new</span>
+224:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000229" class="method-detail">
+        <a name="M000229"></a>
+
+        <div class="method-heading">
+          <a href="#M000229" class="method-signature">
+          <span class="method-name">table_alias_for</span><span class="method-args">( path )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a proper table alias for the given path. This alias may be used in
+SQL statements.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000229-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000229-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 160</span>
+160:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_alias_for</span>( <span class="ruby-identifier">path</span> )
+161:       <span class="ruby-identifier">table_aliases</span>[<span class="ruby-identifier">path</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">map_table_alias_for</span>( <span class="ruby-identifier">path</span> )
+162:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000234" class="method-detail">
+        <a name="M000234"></a>
+
+        <div class="method-heading">
+          <a href="#M000234" class="method-signature">
+          <span class="method-name">table_aliases</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a hash mapping paths to proper table aliases to use in SQL
+statements.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000234-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 227</span>
+227:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_aliases</span>
+228:       <span class="ruby-ivar">@table_aliases</span> <span class="ruby-operator">||=</span> {}
+229:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
+
+        <div class="method-heading">
+          <a href="#M000222" class="method-signature">
+          <span class="method-name">top_level_model</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000222-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/obligation_scope.rb, line 101</span>
+101:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">top_level_model</span>
+102:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value str">&quot;3&quot;</span>
+103:         <span class="ruby-ivar">@proxy_scope</span>
+104:       <span class="ruby-keyword kw">else</span>
+105:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">klass</span>
+106:       <span class="ruby-keyword kw">end</span>
+107:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,4 +1,5 @@
 class Lemma < ActiveRecord::Base
+    acts_as_taggable
     has_many :coauthors
     has_many :users, :through => :coauthors
       

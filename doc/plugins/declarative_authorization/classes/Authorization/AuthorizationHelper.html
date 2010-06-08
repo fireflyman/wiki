@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Authorization::AuthorizationHelper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Authorization::AuthorizationHelper</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/declarative_authorization/lib/declarative_authorization/helper_rb.html">
+                vendor/plugins/declarative_authorization/lib/declarative_authorization/helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000015">has_role?</a>&nbsp;&nbsp;
+      <a href="#M000016">has_role_with_hierarchy?</a>&nbsp;&nbsp;
+      <a href="#M000014">permitted_to?</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">has_role?</span><span class="method-args">(*roles, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+While <a href="AuthorizationHelper.html#M000014">permitted_to?</a> is used
+for authorization in views, in some cases content should only be shown to
+some users without being concerned with authorization. E.g. to only show
+the most relevant menu options to a certain group of users. That is what <a
+href="AuthorizationHelper.html#M000015">has_role?</a> should be used for.
+</p>
+<p>
+Examples:
+</p>
+<pre>
+    &lt;% has_role?(:sales) do %&gt;
+    &lt;%= link_to 'All contacts', contacts_path %&gt;
+    &lt;% end %&gt;
+    ...
+    &lt;% if has_role?(:sales) %&gt;
+    &lt;%= link_to 'Customer contacts', contacts_path %&gt;
+    &lt;% else %&gt;
+    ...
+    &lt;% end %&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/helper.rb, line 51</span>
+51:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_role?</span> (<span class="ruby-operator">*</span><span class="ruby-identifier">roles</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+52:       <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">has_role?</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">roles</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+53:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="#M000016" class="method-signature">
+          <span class="method-name">has_role_with_hierarchy?</span><span class="method-args">(*roles, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+As <a href="AuthorizationHelper.html#M000015">has_role?</a> except checks
+all roles included in the role hierarchy
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000016-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/helper.rb, line 56</span>
+56:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_role_with_hierarchy?</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">roles</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+57:       <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">has_role_with_hierarchy?</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">roles</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+58:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">permitted_to?</span><span class="method-args">(privilege, object_or_sym = nil, options = {}, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+If the current user meets the given privilege, <a
+href="AuthorizationHelper.html#M000014">permitted_to?</a> returns true and
+yields to the optional block. The attribute checks that are defined in the
+authorization rules are only evaluated if an object is given for context.
+</p>
+<p>
+Examples:
+</p>
+<pre>
+    &lt;% permitted_to? :create, :users do %&gt;
+    &lt;%= link_to 'New', new_user_path %&gt;
+    &lt;% end %&gt;
+    ...
+    &lt;% if permitted_to? :create, :users %&gt;
+    &lt;%= link_to 'New', new_user_path %&gt;
+    &lt;% else %&gt;
+    You are not allowed to create new users!
+    &lt;% end %&gt;
+    ...
+    &lt;% for user in @users %&gt;
+    &lt;%= link_to 'Edit', edit_user_path(user) if permitted_to? :update, user %&gt;
+    &lt;% end %&gt;
+</pre>
+<p>
+To pass in an object and override the context, you can use the optional
+options:
+</p>
+<pre>
+    permitted_to? :update, user, :context =&gt; :account
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/helper.rb, line 31</span>
+31:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">permitted_to?</span> (<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">object_or_sym</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+32:       <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">permitted_to?</span>(<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">object_or_sym</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+33:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

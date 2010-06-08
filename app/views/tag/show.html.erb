@@ -1,0 +1,6 @@
+<hr/>
+<% for lemma in @lemmas %>
+  <%= link_to lemma.title, :controller => 'lemma', :action => 'show' ,
+  :id => lemma %><br/>
+<% end %>
+<p><%= link_to "Back", :action => "index" %></p>

@@ -9,11 +9,18 @@
 <% end %>
 <hr />
 <p>
-  <b>共同创作者:</b><br/>
+<%= link_to @lemma.tag_list.to_s, { :controller => 'tag', :action => 'show', :id => @tag_name }%></p>
+
+
+<p>
+  <span style="font-weight: bold"> 共同创作者:</span><br/>
   <% @lemma.coauthors.each do |coauthor| %>
     <%= coauthor.user.login if coauthor.active? %>
   <% end %>
 </p>
+   
+
+ 
 <% if @lemma.contains?(current_user) %>
   <%= link_to '编辑该词条', [:edit,@lemma] %>
 <% end %>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: CHANGELOG</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>CHANGELOG</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>vendor/plugins/declarative_authorization/CHANGELOG
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Fri Apr 30 11:45:11 +0800 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <ul>
+<li>Omnipotent roles [timcharper]
+
+</li>
+<li>Meaningful error in case of missing authorization rules file [timcharper]
+
+</li>
+<li>Rails 3 support [sb]
+
+</li>
+<li>Support shallow nested resources [jjb]
+
+</li>
+<li>Allow multiple authorization rules files [kaichen]
+
+</li>
+</ul>
+<p>
+** RELEASE 0.4 (November 15, 2009) **
+</p>
+<ul>
+<li>Implemented controller namespace handling [sb]
+
+</li>
+<li>Improved if_attribute to allow nesting of has_many associations [sb]
+
+</li>
+<li>Improved if_permitted_to: allow has_many associations and improved context
+inference [sb]
+
+</li>
+<li>Added option on handling non-existant auto-loaded object [sb]
+
+</li>
+<li>Added with_user as module method [sb]
+
+</li>
+<li>Change support i18n [sb]
+
+</li>
+</ul>
+<p>
+** RELEASE 0.3.2.3 (October 12, 2009) **
+</p>
+<ul>
+<li>Switched to gemcutter [sb]
+
+</li>
+<li>Fixed has_role? for guest user. Closes 8 [sb]
+
+</li>
+<li>Fixed unnecessary DB query with named scopes [sb, ledermann]
+
+</li>
+<li>Change support: suggestions: grouping, sorting by affected users [sb]
+
+</li>
+<li>Fixed context inference from AR objects for STI by switching to
+class.name.tableize [sb]
+
+</li>
+<li>Allow multiple contexts as arguments to has_permission_on [Jeroen van Dijk]
+
+</li>
+</ul>
+<p>
+** RELEASE 0.3.2.2 (August 27, 2009) **
+</p>
+<ul>
+<li>Fix without_access_control test cases [sb]
+
+</li>
+<li>Fixed error on debug logging (Closes 6) [sb]
+
+</li>
+<li>Fixed without_access_control instance method in TestHelper [sb]
+
+</li>
+</ul>
+<p>
+** RELEASE 0.3.2.1 (August 14, 2009) **
+</p>
+<ul>
+<li>Fix gemspec for Rdoc generation [sb]
+
+</li>
+</ul>
+<p>
+** RELEASE 0.3.2 (August 13, 2009) **
+</p>
+<ul>
+<li>Fix for model-level permitted_to?/! [sb]
+
+</li>
+</ul>
+<p>
+** RELEASE 0.3.1 (August 12, 2009) **
+</p>
+<ul>
+<li>Change Support: Suggestion grouping, sort by affected users [sb]
+
+</li>
+<li>Changed context derived from objects to class.name.tableize to fix STI [sb]
+
+</li>
+<li>Simplified controller authorization with filter_resource_access [sb]
+
+</li>
+<li>Allow passing explicit context in addition to object in permitted_to? [Olly
+Lylo, sb]
+
+</li>
+<li>Change Supporter: suggest changes to authorization rules [sb]
+
+</li>
+<li>Added permitted_to!/? in model [Eike Carls]
+
+</li>
+<li>New test helper: should_(not_)_be_allowed_to(privilege, object_or_context)
+[sb]
+
+</li>
+</ul>
+<p>
+** RELEASE 0.3 (April 20, 2009) **
+</p>
+<ul>
+<li>New option :join_by for has_permission_on to allow AND&#8216;ing of
+statements in one has_permission_on block [sb]
+
+</li>
+<li>Allow using_access_control to be called directly on ActiveRecord::Base,
+globally enabling model security [sb]
+
+</li>
+<li>New operator: intersects_with, comparing two Enumerables in if_attribute
+[sb]
+
+</li>
+<li>Improved if_permitted_to syntax: if the attribute is left out, permissions
+are checked on for the current object [sb]
+
+</li>
+<li>Added has_role_with_hierarchy? method to retrieve explicit and calculated
+roles [jeremyf]
+
+</li>
+<li>Added a simple rules analyzer to help improve authorization rules [sb]
+
+</li>
+<li>Gemified plugin. Needed to restructure the lib path contents [sb]
+
+</li>
+<li>Added handling of
+Authorization::AuthorizationInController::ClassMethods.filter_access_to
+parameters that are of the form [:show, :update] instead of just :show,
+:update. [jeremyf]
+
+</li>
+<li>Added authorization usage helper for checking filter_access_to usage in
+controllers [sb]
+
+</li>
+<li>Added a authorization rules browser. See README for more information [sb]
+
+</li>
+<li>Added Model.using_access_control? to check if a model has model security
+activated [sb]
+
+</li>
+<li>Changed Authorization::ObligationScope#map_table_alias_for [Brian
+Langenfeld]
+
+<ul>
+<li>Fixed to prevent bad aliases from being produced.
+
+</li>
+</ul>
+</li>
+<li>Changed Authorization::Attribute#validate? [Brian Langenfeld]
+
+<ul>
+<li>Encountering a nil value when evaluating an attribute now raises a
+NilAttributeValueError, instead of an AuthorizationError. We leave it to
+the caller to decide what to do about it.
+
+</li>
+</ul>
+</li>
+<li>Changed Authorization::Engine#permit! [Brian Langenfeld]
+
+<ul>
+<li>We now convert incoming privileges to symbols (e.g. &#8216;read&#8217; is
+made equivalent to :read). This ensures the privileges will match those
+defined in the authorization rules file.
+
+</li>
+<li>The method now properly infers context when checking against an association
+(e.g. user.posts). We do this by leveraging ActiveRecord builder method
+&#8216;new&#8217; to instantiate a proper object we can work with.
+
+</li>
+<li>When testing rules for positive results (via
+Authorization::Attribute#validate?), we now rescue NilAttributeValueError
+exceptions, simply causing the rule to return a negative result (instead of
+barfing).
+
+</li>
+</ul>
+</li>
+<li>Changed Authorization::ObligationScope#rebuild_join_options! [Brian
+Langenfeld]
+
+<ul>
+<li>If we&#8216;re dealing with multiple obligations we have to check (i.e.
+ones that result in OR&#8216;d conditions), we now use :include instead of
+:joins for our generated scope. This does seem like a kludge, but until
+ActiveRecord scopes support unions (for checking obligations individually
+and consolidating the results), we don&#8216;t have much choice. Something
+to revisit later, for sure.
+
+</li>
+</ul>
+</li>
+</ul>
+<p>
+** RELEASE 0.2 (February 2, 2009) **
+</p>
+<ul>
+<li>added negative operators: is_not, not_in, does_not_contain [sb]
+
+</li>
+<li>changed user.roles to user.role_symbols to reduce interferance with
+associations [sb]
+
+</li>
+<li>Ruby 1.9 and Rails 2.3 compatibility [sb]
+
+</li>
+<li>if_permitted_to for has_permission_on blocks for DRYer auth rules [sb]
+
+</li>
+<li>ObligationScope rewrite of query rewriting [Brian Langenfeld]
+
+</li>
+<li>changed exception hierarchy to begin at StandardError [sb]
+
+</li>
+<li>:is_in operator [sb]
+
+</li>
+<li>added has_role? helper [sb]
+
+</li>
+<li>made plugin thread-safe [sb]
+
+</li>
+<li>added maintenance and test helpers [sb]
+
+</li>
+<li>changed default permission denied response to 403 Forbidden [sb]
+
+</li>
+<li>descriptions for titles and roles [sb]
+
+</li>
+<li>fixed for PostgreSQL [Mark Mansour]
+
+</li>
+<li>improved DSL syntax: allow for array of contexts in has_permission_on [sb]
+
+</li>
+</ul>
+<p>
+** RELEASE 0.1 (August 22, 2008) **
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Authorization::Engine</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Authorization::Engine</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization_rb.html">
+                vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb
+                </a>
+        <br />
+                <a href="../../files/vendor/plugins/declarative_authorization/lib/declarative_authorization/railsengine_rb.html">
+                vendor/plugins/declarative_authorization/lib/declarative_authorization/railsengine.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="Engine.html">Authorization::Engine</a> implements the reference
+monitor. It may be used for querying the permission and retrieving <a
+href="Engine.html#M000243">obligations</a> under which a certain privilege
+is granted for the current user.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000244">description_for</a>&nbsp;&nbsp;
+      <a href="#M000248">instance</a>&nbsp;&nbsp;
+      <a href="#M000240">new</a>&nbsp;&nbsp;
+      <a href="#M000243">obligations</a>&nbsp;&nbsp;
+      <a href="#M000241">permit!</a>&nbsp;&nbsp;
+      <a href="#M000242">permit?</a>&nbsp;&nbsp;
+      <a href="#M000246">roles_for</a>&nbsp;&nbsp;
+      <a href="#M000247">roles_with_hierarchy_for</a>&nbsp;&nbsp;
+      <a href="#M000245">title_for</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">auth_rules</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">omnipotent_roles</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">privilege_hierarchy</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">privileges</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">rev_priv_hierarchy</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">rev_role_hierarchy</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">role_descriptions</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">role_hierarchy</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">role_titles</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">roles</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000248" class="method-detail">
+        <a name="M000248"></a>
+
+        <div class="method-heading">
+          <a href="#M000248" class="method-signature">
+          <span class="method-name">instance</span><span class="method-args">(dsl_file = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an <a href="Engine.html#M000248">instance</a> of <a
+href="Engine.html">Engine</a>, which is created if there isn&#8216;t one
+yet. If <tt>dsl_file</tt> is given, it is passed on to <a
+href="Engine.html#M000240">Engine.new</a> and a <a
+href="Engine.html#M000240">new</a> <a
+href="Engine.html#M000248">instance</a> is always created.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000248-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000248-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 256</span>
+256:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">instance</span> (<span class="ruby-identifier">dsl_file</span> = <span class="ruby-keyword kw">nil</span>)
+257:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dsl_file</span> <span class="ruby-keyword kw">or</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'RAILS_ENV'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'development'</span>
+258:         <span class="ruby-ivar">@@instance</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">dsl_file</span>)
+259:       <span class="ruby-keyword kw">else</span>
+260:         <span class="ruby-ivar">@@instance</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">new</span>
+261:       <span class="ruby-keyword kw">end</span>
+262:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000240" class="method-detail">
+        <a name="M000240"></a>
+
+        <div class="method-heading">
+          <a href="#M000240" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(reader = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+If <tt>reader</tt> is not given, a <a href="Engine.html#M000240">new</a>
+one is created with the default authorization configuration of
+<tt>AUTH_DSL_FILES</tt>. If given, may be either a <a
+href="Reader.html">Reader</a> object or a path to a configuration file.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000240-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000240-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 68</span>
+68:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">reader</span> = <span class="ruby-keyword kw">nil</span>)
+69:       <span class="ruby-identifier">reader</span> = <span class="ruby-constant">Reader</span><span class="ruby-operator">::</span><span class="ruby-constant">DSLReader</span>.<span class="ruby-identifier">factory</span>(<span class="ruby-identifier">reader</span> <span class="ruby-operator">||</span> <span class="ruby-constant">AUTH_DSL_FILES</span>)
+70: 
+71:       <span class="ruby-ivar">@privileges</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">privileges_reader</span>.<span class="ruby-identifier">privileges</span>
+72:       <span class="ruby-comment cmt"># {priv =&gt; [[priv, ctx],...]}</span>
+73:       <span class="ruby-ivar">@privilege_hierarchy</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">privileges_reader</span>.<span class="ruby-identifier">privilege_hierarchy</span>
+74:       <span class="ruby-ivar">@auth_rules</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">auth_rules_reader</span>.<span class="ruby-identifier">auth_rules</span>
+75:       <span class="ruby-ivar">@roles</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">auth_rules_reader</span>.<span class="ruby-identifier">roles</span>
+76:       <span class="ruby-ivar">@omnipotent_roles</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">auth_rules_reader</span>.<span class="ruby-identifier">omnipotent_roles</span>
+77:       <span class="ruby-ivar">@role_hierarchy</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">auth_rules_reader</span>.<span class="ruby-identifier">role_hierarchy</span>
+78: 
+79:       <span class="ruby-ivar">@role_titles</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">auth_rules_reader</span>.<span class="ruby-identifier">role_titles</span>
+80:       <span class="ruby-ivar">@role_descriptions</span> = <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">auth_rules_reader</span>.<span class="ruby-identifier">role_descriptions</span>
+81:       <span class="ruby-ivar">@reader</span> = <span class="ruby-identifier">reader</span>
+82:       
+83:       <span class="ruby-comment cmt"># {[priv, ctx] =&gt; [priv, ...]}</span>
+84:       <span class="ruby-ivar">@rev_priv_hierarchy</span> = {}
+85:       <span class="ruby-ivar">@privilege_hierarchy</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+86:         <span class="ruby-identifier">value</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span> 
+87:           <span class="ruby-ivar">@rev_priv_hierarchy</span>[<span class="ruby-identifier">val</span>] <span class="ruby-operator">||=</span> []
+88:           <span class="ruby-ivar">@rev_priv_hierarchy</span>[<span class="ruby-identifier">val</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">key</span>
+89:         <span class="ruby-keyword kw">end</span>
+90:       <span class="ruby-keyword kw">end</span>
+91:       <span class="ruby-ivar">@rev_role_hierarchy</span> = {}
+92:       <span class="ruby-ivar">@role_hierarchy</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">higher_role</span>, <span class="ruby-identifier">lower_roles</span><span class="ruby-operator">|</span>
+93:         <span class="ruby-identifier">lower_roles</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">role</span><span class="ruby-operator">|</span>
+94:           (<span class="ruby-ivar">@rev_role_hierarchy</span>[<span class="ruby-identifier">role</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">higher_role</span>
+95:         <span class="ruby-keyword kw">end</span>
+96:       <span class="ruby-keyword kw">end</span>
+97:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000244" class="method-detail">
+        <a name="M000244"></a>
+
+        <div class="method-heading">
+          <a href="#M000244" class="method-signature">
+          <span class="method-name">description_for</span><span class="method-args">(role)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the description for the given role. The description may be
+specified with the authorization rules. Returns <tt>nil</tt> if none was
+given.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000244-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000244-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 219</span>
+219:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">description_for</span> (<span class="ruby-identifier">role</span>)
+220:       <span class="ruby-identifier">role_descriptions</span>[<span class="ruby-identifier">role</span>]
+221:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000243" class="method-detail">
+        <a name="M000243"></a>
+
+        <div class="method-heading">
+          <a href="#M000243" class="method-signature">
+          <span class="method-name">obligations</span><span class="method-args">(privilege, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Engine.html#M000243">obligations</a> to be met by the
+current user for the given privilege as an array of obligation hashes in
+form of
+</p>
+<pre>
+  [{:object_attribute =&gt; obligation_value, ...}, ...]
+</pre>
+<p>
+where <tt>obligation_value</tt> is either (recursively) another obligation
+hash or a value spec, such as
+</p>
+<pre>
+  [operator, literal_value]
+</pre>
+<p>
+The obligation hashes in the array should be OR&#8216;ed, conditions inside
+the hashes AND&#8216;ed.
+</p>
+<p>
+Example
+</p>
+<pre>
+  {:branch =&gt; {:company =&gt; [:is, 24]}, :active =&gt; [:is, true]}
+</pre>
+<p>
+Options
+</p>
+<dl>
+<dt>:<tt>context</tt></dt><dd>See <a href="Engine.html#M000241">permit!</a>
+
+</dd>
+<dt>:<tt>user</tt></dt><dd>See <a href="Engine.html#M000241">permit!</a>
+
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000243-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000243-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 204</span>
+204:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obligations</span> (<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">options</span> = {})
+205:       <span class="ruby-identifier">options</span> = {<span class="ruby-identifier">:context</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+206:       <span class="ruby-identifier">user</span>, <span class="ruby-identifier">roles</span>, <span class="ruby-identifier">privileges</span> = <span class="ruby-identifier">user_roles_privleges_from_options</span>(<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">options</span>)
+207: 
+208:       <span class="ruby-identifier">permit!</span>(<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">:skip_attribute_test</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">:context</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:context</span>])
+209:       
+210:       <span class="ruby-identifier">attr_validator</span> = <span class="ruby-constant">AttributeValidator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">user</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:context</span>])
+211:       <span class="ruby-identifier">matching_auth_rules</span>(<span class="ruby-identifier">roles</span>, <span class="ruby-identifier">privileges</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:context</span>]).<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rule</span><span class="ruby-operator">|</span>
+212:         <span class="ruby-identifier">rule</span>.<span class="ruby-identifier">obligations</span>(<span class="ruby-identifier">attr_validator</span>)
+213:       <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">flatten</span>
+214:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000241" class="method-detail">
+        <a name="M000241"></a>
+
+        <div class="method-heading">
+          <a href="#M000241" class="method-signature">
+          <span class="method-name">permit!</span><span class="method-args">(privilege, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if privilege is met by the current user. Raises <a
+href="AuthorizationError.html">AuthorizationError</a> otherwise.
+<tt>privilege</tt> may be given with or without context. In the latter
+case, the :<tt>context</tt> option is required.
+</p>
+<p>
+Options:
+</p>
+<dl>
+<dt>:<tt>context</tt></dt><dd>The context part of the privilege. Defaults either to the tableized
+<tt>class_name</tt> of the given :<tt>object</tt>, if given. That is,
+:<tt>users</tt> for :<tt>object</tt> of type User. Raises <a
+href="AuthorizationUsageError.html">AuthorizationUsageError</a> if context
+is missing and not to be infered.
+
+</dd>
+<dt>:<tt>object</tt></dt><dd>An context object to test attribute checks against.
+
+</dd>
+<dt>:<tt>skip_attribute_test</tt></dt><dd>Skips those attribute checks in the authorization rules. Defaults to false.
+
+</dd>
+<dt>:<tt>user</tt></dt><dd>The user to check the authorization for. Defaults to <a
+href="../Authorization.html#M000002">Authorization#current_user</a>.
+
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000241-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000241-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 126</span>
+126:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">permit!</span> (<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">options</span> = {})
+127:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Authorization</span>.<span class="ruby-identifier">ignore_access_control</span>
+128:       <span class="ruby-identifier">options</span> = {
+129:         <span class="ruby-identifier">:object</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,
+130:         <span class="ruby-identifier">:skip_attribute_test</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,
+131:         <span class="ruby-identifier">:context</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>
+132:       }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+133:       
+134:       <span class="ruby-comment cmt"># Make sure we're handling all privileges as symbols.</span>
+135:       <span class="ruby-identifier">privilege</span> = <span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">is_a?</span>( <span class="ruby-constant">Array</span> ) <span class="ruby-operator">?</span>
+136:                   <span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">priv</span><span class="ruby-operator">|</span> <span class="ruby-identifier">priv</span>.<span class="ruby-identifier">to_sym</span> } <span class="ruby-operator">:</span>
+137:                   <span class="ruby-identifier">privilege</span>.<span class="ruby-identifier">to_sym</span>
+138:       
+139:       <span class="ruby-comment cmt">#</span>
+140:       <span class="ruby-comment cmt"># If the object responds to :proxy_reflection, we're probably working with</span>
+141:       <span class="ruby-comment cmt"># an association proxy.  Use 'new' to leverage ActiveRecord's builder</span>
+142:       <span class="ruby-comment cmt"># functionality to obtain an object against which we can check permissions.</span>
+143:       <span class="ruby-comment cmt">#</span>
+144:       <span class="ruby-comment cmt"># Example: permit!( :edit, :object =&gt; user.posts )</span>
+145:       <span class="ruby-comment cmt">#</span>
+146:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>].<span class="ruby-identifier">respond_to?</span>( <span class="ruby-identifier">:proxy_reflection</span> ) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>].<span class="ruby-identifier">respond_to?</span>( <span class="ruby-identifier">:new</span> )
+147:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>].<span class="ruby-identifier">new</span>
+148:       <span class="ruby-keyword kw">end</span>
+149:       
+150:       <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:context</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>] <span class="ruby-operator">&amp;&amp;</span> (
+151:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>].<span class="ruby-identifier">class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:decl_auth_context</span>) <span class="ruby-operator">?</span>
+152:             <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>].<span class="ruby-identifier">class</span>.<span class="ruby-identifier">decl_auth_context</span> <span class="ruby-operator">:</span>
+153:             <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>].<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">tableize</span>.<span class="ruby-identifier">to_sym</span>
+154:       ) <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span>
+155:       
+156:       <span class="ruby-identifier">user</span>, <span class="ruby-identifier">roles</span>, <span class="ruby-identifier">privileges</span> = <span class="ruby-identifier">user_roles_privleges_from_options</span>(<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">options</span>)
+157: 
+158:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">roles</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> (<span class="ruby-identifier">roles</span> <span class="ruby-operator">&amp;</span> <span class="ruby-ivar">@omnipotent_roles</span>).<span class="ruby-identifier">empty?</span>
+159: 
+160:       <span class="ruby-comment cmt"># find a authorization rule that matches for at least one of the roles and </span>
+161:       <span class="ruby-comment cmt"># at least one of the given privileges</span>
+162:       <span class="ruby-identifier">attr_validator</span> = <span class="ruby-constant">AttributeValidator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:object</span>], <span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:context</span>])
+163:       <span class="ruby-identifier">rules</span> = <span class="ruby-identifier">matching_auth_rules</span>(<span class="ruby-identifier">roles</span>, <span class="ruby-identifier">privileges</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:context</span>])
+164:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rules</span>.<span class="ruby-identifier">empty?</span>
+165:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotAuthorized</span>, <span class="ruby-node">&quot;No matching rules found for #{privilege} for #{user.inspect} &quot;</span> <span class="ruby-operator">+</span>
+166:           <span class="ruby-node">&quot;(roles #{roles.inspect}, privileges #{privileges.inspect}, &quot;</span> <span class="ruby-operator">+</span>
+167:           <span class="ruby-node">&quot;context #{options[:context].inspect}).&quot;</span>
+168:       <span class="ruby-keyword kw">end</span>
+169:       
+170:       <span class="ruby-comment cmt"># Test each rule in turn to see whether any one of them is satisfied.</span>
+171:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">rules</span>.<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">rule</span><span class="ruby-operator">|</span> <span class="ruby-identifier">rule</span>.<span class="ruby-identifier">validate?</span>(<span class="ruby-identifier">attr_validator</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:skip_attribute_test</span>])}
+172:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">AttributeAuthorizationError</span>, <span class="ruby-node">&quot;#{privilege} not allowed for #{user.inspect} on #{(options[:object] || options[:context]).inspect}.&quot;</span>
+173:       <span class="ruby-keyword kw">end</span>
+174:       <span class="ruby-keyword kw">true</span>
+175:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000242" class="method-detail">
+        <a name="M000242"></a>
+
+        <div class="method-heading">
+          <a href="#M000242" class="method-signature">
+          <span class="method-name">permit?</span><span class="method-args">(privilege, options = {}) {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Calls <a href="Engine.html#M000241">permit!</a> but rescues the
+AuthorizationException and returns false instead. If no exception is
+raised, <a href="Engine.html#M000242">permit?</a> returns true and yields
+to the optional block.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000242-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000242-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 180</span>
+180:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">permit?</span> (<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yields:</span>
+181:       <span class="ruby-identifier">permit!</span>(<span class="ruby-identifier">privilege</span>, <span class="ruby-identifier">options</span>)
+182:       <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+183:       <span class="ruby-keyword kw">true</span>
+184:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NotAuthorized</span>
+185:       <span class="ruby-keyword kw">false</span>
+186:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000246" class="method-detail">
+        <a name="M000246"></a>
+
+        <div class="method-heading">
+          <a href="#M000246" class="method-signature">
+          <span class="method-name">roles_for</span><span class="method-args">(user)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the role symbols of the given user.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000246-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000246-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 231</span>
+231:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">roles_for</span> (<span class="ruby-identifier">user</span>)
+232:       <span class="ruby-identifier">user</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Authorization</span>.<span class="ruby-identifier">current_user</span>
+233:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-node">&quot;User object doesn't respond to roles (#{user.inspect})&quot;</span> \
+234:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">user</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:role_symbols</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">user</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:roles</span>)
+235: 
+236:       <span class="ruby-constant">RAILS_DEFAULT_LOGGER</span>.<span class="ruby-identifier">info</span>(<span class="ruby-value str">&quot;The use of user.roles is deprecated.  Please add a method &quot;</span> <span class="ruby-operator">+</span>
+237:           <span class="ruby-value str">&quot;role_symbols to your User model.&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">RAILS_DEFAULT_LOGGER</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">user</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:role_symbols</span>)
+238: 
+239:       <span class="ruby-identifier">roles</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:role_symbols</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">role_symbols</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">roles</span>
+240: 
+241:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-node">&quot;User.#{user.respond_to?(:role_symbols) ? 'role_symbols' : 'roles'} &quot;</span> <span class="ruby-operator">+</span>
+242:         <span class="ruby-node">&quot;doesn't return an Array of Symbols (#{roles.inspect})&quot;</span> \
+243:             <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">roles</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-keyword kw">or</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">roles</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">roles</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>))
+244: 
+245:       (<span class="ruby-identifier">roles</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span>[<span class="ruby-identifier">:guest</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">roles</span>)
+246:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000247" class="method-detail">
+        <a name="M000247"></a>
+
+        <div class="method-heading">
+          <a href="#M000247" class="method-signature">
+          <span class="method-name">roles_with_hierarchy_for</span><span class="method-args">(user)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the role symbols and inherritted role symbols for the given user
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000247-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000247-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 249</span>
+249:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">roles_with_hierarchy_for</span>(<span class="ruby-identifier">user</span>)
+250:       <span class="ruby-identifier">flatten_roles</span>(<span class="ruby-identifier">roles_for</span>(<span class="ruby-identifier">user</span>))
+251:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000245" class="method-detail">
+        <a name="M000245"></a>
+
+        <div class="method-heading">
+          <a href="#M000245" class="method-signature">
+          <span class="method-name">title_for</span><span class="method-args">(role)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the title for the given role. The title may be specified with the
+authorization rules. Returns <tt>nil</tt> if none was given.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000245-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000245-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 226</span>
+226:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title_for</span> (<span class="ruby-identifier">role</span>)
+227:       <span class="ruby-identifier">role_titles</span>[<span class="ruby-identifier">role</span>]
+228:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

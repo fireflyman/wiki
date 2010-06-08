@@ -5,6 +5,7 @@
     <th>Title</th>
     <th>Body</th>
     <th>Point</th>
+    <th>Tag</th>
   </tr>
 
 <% @lemmas.each do |lemma| %>
@@ -12,9 +13,10 @@
     <td><%=h lemma.title %></td>
     <td><%=h lemma.body %></td>
     <td><%=h lemma.point %></td>
-    <td><%= link_to 'Show', lemma %></td>
-    <td><%= link_to 'Edit', edit_lemma_path(lemma) %></td>
-    <td><%= link_to 'Destroy', lemma, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%=h lemma.tag_list%></td>
+    <td><%= link_to 'Show', lemma %>
+    <%= link_to 'Edit', edit_lemma_path(lemma) %>
+    <%= link_to 'Destroy', lemma, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

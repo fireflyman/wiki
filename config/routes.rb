@@ -1,10 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
   #map.resources :coauthors
 
-  map.resources :lemmas do |lemma|
-    lemma.resources :coauthors
-  end
+  #map.resources :lemmas do |lemma|
+    #lemma.resources :coauthors
+  #end
   
+map.resources :lemmas,:collection  => {:tag  => :get}  do |lemma|
+    lemma.resources :coauthors
+end
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'

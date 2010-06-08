@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Authorization::Attribute</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Authorization::Attribute</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization_rb.html">
+                vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000268">deep_hash_clone</a>&nbsp;&nbsp;
+      <a href="#M000263">initialize_copy</a>&nbsp;&nbsp;
+      <a href="#M000262">new</a>&nbsp;&nbsp;
+      <a href="#M000267">object_attribute_value</a>&nbsp;&nbsp;
+      <a href="#M000265">obligation</a>&nbsp;&nbsp;
+      <a href="#M000266">to_long_s</a>&nbsp;&nbsp;
+      <a href="#M000264">validate?</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000262" class="method-detail">
+        <a name="M000262"></a>
+
+        <div class="method-heading">
+          <a href="#M000262" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(conditions_hash)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+attr_conditions_hash of form { :object_attribute =&gt; [operator,
+value_block], &#8230; } { :object_attribute =&gt; { :attr =&gt; &#8230; } }
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000262-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000262-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 402</span>
+402:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">conditions_hash</span>)
+403:       <span class="ruby-ivar">@conditions_hash</span> = <span class="ruby-identifier">conditions_hash</span>
+404:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000263" class="method-detail">
+        <a name="M000263"></a>
+
+        <div class="method-heading">
+          <a href="#M000263" class="method-signature">
+          <span class="method-name">initialize_copy</span><span class="method-args">(from)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000263-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000263-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 406</span>
+406:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_copy</span> (<span class="ruby-identifier">from</span>)
+407:       <span class="ruby-ivar">@conditions_hash</span> = <span class="ruby-identifier">deep_hash_clone</span>(<span class="ruby-ivar">@conditions_hash</span>)
+408:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000265" class="method-detail">
+        <a name="M000265"></a>
+
+        <div class="method-heading">
+          <a href="#M000265" class="method-signature">
+          <span class="method-name">obligation</span><span class="method-args">(attr_validator, hash = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+resolves all the values in condition_hash
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000265-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000265-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 487</span>
+487:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">obligation</span> (<span class="ruby-identifier">attr_validator</span>, <span class="ruby-identifier">hash</span> = <span class="ruby-keyword kw">nil</span>)
+488:       <span class="ruby-identifier">hash</span> = (<span class="ruby-identifier">hash</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@conditions_hash</span>).<span class="ruby-identifier">clone</span>
+489:       <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attr</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+490:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+491:           <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">attr</span>] = <span class="ruby-identifier">obligation</span>(<span class="ruby-identifier">attr_validator</span>, <span class="ruby-identifier">value</span>)
+492:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+493:           <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">attr</span>] = [<span class="ruby-identifier">value</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">attr_validator</span>.<span class="ruby-identifier">evaluate</span>(<span class="ruby-identifier">value</span>[<span class="ruby-value">1</span>])]
+494:         <span class="ruby-keyword kw">else</span>
+495:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationError</span>, <span class="ruby-value str">&quot;Wrong conditions hash format&quot;</span>
+496:         <span class="ruby-keyword kw">end</span>
+497:       <span class="ruby-keyword kw">end</span>
+498:       <span class="ruby-identifier">hash</span>
+499:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000266" class="method-detail">
+        <a name="M000266"></a>
+
+        <div class="method-heading">
+          <a href="#M000266" class="method-signature">
+          <span class="method-name">to_long_s</span><span class="method-args">(hash = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000266-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000266-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 501</span>
+501:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_long_s</span> (<span class="ruby-identifier">hash</span> = <span class="ruby-keyword kw">nil</span>)
+502:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">hash</span>
+503:         <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>, <span class="ruby-identifier">key_val</span><span class="ruby-operator">|</span>
+504:           <span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span> = <span class="ruby-identifier">key_val</span>
+505:           <span class="ruby-identifier">memo</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">val</span>
+506:                       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">then</span> <span class="ruby-node">&quot;#{val[0]} { #{val[1].respond_to?(:to_ruby) ? val[1].to_ruby.gsub(/^proc \{\n?(.*)\n?\}$/m, '\1') : &quot;...&quot;} }&quot;</span>
+507:                       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">to_long_s</span>(<span class="ruby-identifier">val</span>)
+508:                       <span class="ruby-keyword kw">end</span>
+509:           <span class="ruby-identifier">memo</span>
+510:         <span class="ruby-keyword kw">end</span>
+511:       <span class="ruby-keyword kw">else</span>
+512:         <span class="ruby-node">&quot;if_attribute #{to_long_s(@conditions_hash).inspect}&quot;</span>
+513:       <span class="ruby-keyword kw">end</span>
+514:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000264" class="method-detail">
+        <a name="M000264"></a>
+
+        <div class="method-heading">
+          <a href="#M000264" class="method-signature">
+          <span class="method-name">validate?</span><span class="method-args">(attr_validator, object = nil, hash = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000264-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000264-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 410</span>
+410:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate?</span> (<span class="ruby-identifier">attr_validator</span>, <span class="ruby-identifier">object</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">hash</span> = <span class="ruby-keyword kw">nil</span>)
+411:       <span class="ruby-identifier">object</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">attr_validator</span>.<span class="ruby-identifier">object</span>
+412:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">object</span>
+413:       
+414:       (<span class="ruby-identifier">hash</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@conditions_hash</span>).<span class="ruby-identifier">all?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attr</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+415:         <span class="ruby-identifier">attr_value</span> = <span class="ruby-identifier">object_attribute_value</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">attr</span>)
+416:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+417:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Enumerable</span>)
+418:             <span class="ruby-identifier">attr_value</span>.<span class="ruby-identifier">any?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">inner_value</span><span class="ruby-operator">|</span>
+419:               <span class="ruby-identifier">validate?</span>(<span class="ruby-identifier">attr_validator</span>, <span class="ruby-identifier">inner_value</span>, <span class="ruby-identifier">value</span>)
+420:             <span class="ruby-keyword kw">end</span>
+421:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">attr_value</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+422:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">NilAttributeValueError</span>, <span class="ruby-node">&quot;Attribute #{attr.inspect} is nil in #{object.inspect}.&quot;</span>
+423:           <span class="ruby-keyword kw">else</span>
+424:             <span class="ruby-identifier">validate?</span>(<span class="ruby-identifier">attr_validator</span>, <span class="ruby-identifier">attr_value</span>, <span class="ruby-identifier">value</span>)
+425:           <span class="ruby-keyword kw">end</span>
+426:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>)
+427:           <span class="ruby-identifier">evaluated</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Proc</span>)
+428:                         <span class="ruby-identifier">attr_validator</span>.<span class="ruby-identifier">evaluate</span>(<span class="ruby-identifier">value</span>[<span class="ruby-value">1</span>])
+429:                       <span class="ruby-keyword kw">else</span>
+430:                         <span class="ruby-identifier">value</span>[<span class="ruby-value">1</span>]
+431:                       <span class="ruby-keyword kw">end</span>
+432:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">value</span>[<span class="ruby-value">0</span>]
+433:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:is</span>
+434:             <span class="ruby-identifier">attr_value</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">evaluated</span>
+435:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:is_not</span>
+436:             <span class="ruby-identifier">attr_value</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">evaluated</span>
+437:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:contains</span>
+438:             <span class="ruby-keyword kw">begin</span>
+439:               <span class="ruby-identifier">attr_value</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">evaluated</span>)
+440:             <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+441:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-value str">&quot;Operator contains requires a &quot;</span> <span class="ruby-operator">+</span>
+442:                   <span class="ruby-node">&quot;subclass of Enumerable as attribute value, got: #{attr_value.inspect} &quot;</span> <span class="ruby-operator">+</span>
+443:                   <span class="ruby-node">&quot;contains #{evaluated.inspect}: #{e}&quot;</span>
+444:             <span class="ruby-keyword kw">end</span>
+445:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:does_not_contain</span>
+446:             <span class="ruby-keyword kw">begin</span>
+447:               <span class="ruby-operator">!</span><span class="ruby-identifier">attr_value</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">evaluated</span>)
+448:             <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+449:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-value str">&quot;Operator does_not_contain requires a &quot;</span> <span class="ruby-operator">+</span>
+450:                   <span class="ruby-node">&quot;subclass of Enumerable as attribute value, got: #{attr_value.inspect} &quot;</span> <span class="ruby-operator">+</span>
+451:                   <span class="ruby-node">&quot;does_not_contain #{evaluated.inspect}: #{e}&quot;</span>
+452:             <span class="ruby-keyword kw">end</span>
+453:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:intersects_with</span>
+454:             <span class="ruby-keyword kw">begin</span>
+455:               <span class="ruby-operator">!</span>(<span class="ruby-identifier">evaluated</span>.<span class="ruby-identifier">to_set</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">attr_value</span>.<span class="ruby-identifier">to_set</span>).<span class="ruby-identifier">empty?</span>
+456:             <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+457:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-value str">&quot;Operator intersects_with requires &quot;</span> <span class="ruby-operator">+</span>
+458:                   <span class="ruby-node">&quot;subclasses of Enumerable, got: #{attr_value.inspect} &quot;</span> <span class="ruby-operator">+</span>
+459:                   <span class="ruby-node">&quot;intersects_with #{evaluated.inspect}: #{e}&quot;</span>
+460:             <span class="ruby-keyword kw">end</span>
+461:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:is_in</span>
+462:             <span class="ruby-keyword kw">begin</span>
+463:               <span class="ruby-identifier">evaluated</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">attr_value</span>)
+464:             <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+465:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-value str">&quot;Operator is_in requires a &quot;</span> <span class="ruby-operator">+</span>
+466:                   <span class="ruby-node">&quot;subclass of Enumerable as value, got: #{attr_value.inspect} &quot;</span> <span class="ruby-operator">+</span>
+467:                   <span class="ruby-node">&quot;is_in #{evaluated.inspect}: #{e}&quot;</span>
+468:             <span class="ruby-keyword kw">end</span>
+469:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:is_not_in</span>
+470:             <span class="ruby-keyword kw">begin</span>
+471:               <span class="ruby-operator">!</span><span class="ruby-identifier">evaluated</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">attr_value</span>)
+472:             <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+473:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-value str">&quot;Operator is_not_in requires a &quot;</span> <span class="ruby-operator">+</span>
+474:                   <span class="ruby-node">&quot;subclass of Enumerable as value, got: #{attr_value.inspect} &quot;</span> <span class="ruby-operator">+</span>
+475:                   <span class="ruby-node">&quot;is_not_in #{evaluated.inspect}: #{e}&quot;</span>
+476:             <span class="ruby-keyword kw">end</span>
+477:           <span class="ruby-keyword kw">else</span>
+478:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationError</span>, <span class="ruby-node">&quot;Unknown operator #{value[0]}&quot;</span>
+479:           <span class="ruby-keyword kw">end</span>
+480:         <span class="ruby-keyword kw">else</span>
+481:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationError</span>, <span class="ruby-value str">&quot;Wrong conditions hash format&quot;</span>
+482:         <span class="ruby-keyword kw">end</span>
+483:       <span class="ruby-keyword kw">end</span>
+484:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000268" class="method-detail">
+        <a name="M000268"></a>
+
+        <div class="method-heading">
+          <a href="#M000268" class="method-signature">
+          <span class="method-name">deep_hash_clone</span><span class="method-args">(hash)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000268-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000268-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 526</span>
+526:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">deep_hash_clone</span> (<span class="ruby-identifier">hash</span>)
+527:       <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>, (<span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span>)<span class="ruby-operator">|</span>
+528:         <span class="ruby-identifier">memo</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">val</span>
+529:                     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+530:                       <span class="ruby-identifier">deep_hash_clone</span>(<span class="ruby-identifier">val</span>)
+531:                     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">NilClass</span>, <span class="ruby-constant">Symbol</span>
+532:                       <span class="ruby-identifier">val</span>
+533:                     <span class="ruby-keyword kw">else</span>
+534:                       <span class="ruby-identifier">val</span>.<span class="ruby-identifier">clone</span>
+535:                     <span class="ruby-keyword kw">end</span>
+536:         <span class="ruby-identifier">memo</span>
+537:       <span class="ruby-keyword kw">end</span>
+538:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000267" class="method-detail">
+        <a name="M000267"></a>
+
+        <div class="method-heading">
+          <a href="#M000267" class="method-signature">
+          <span class="method-name">object_attribute_value</span><span class="method-args">(object, attr)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000267-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000267-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/authorization.rb, line 517</span>
+517:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">object_attribute_value</span> (<span class="ruby-identifier">object</span>, <span class="ruby-identifier">attr</span>)
+518:       <span class="ruby-keyword kw">begin</span>
+519:         <span class="ruby-identifier">object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">attr</span>)
+520:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-constant">NoMethodError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+521:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">AuthorizationUsageError</span>, <span class="ruby-node">&quot;Error when calling #{attr} on &quot;</span> <span class="ruby-operator">+</span>
+522:          <span class="ruby-node">&quot;#{object.inspect} for validating attribute: #{e}&quot;</span>
+523:       <span class="ruby-keyword kw">end</span>
+524:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

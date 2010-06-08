@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Authorization::Reader::DSLReader</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Authorization::Reader::DSLReader</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/vendor/plugins/declarative_authorization/lib/declarative_authorization/reader_rb.html">
+                vendor/plugins/declarative_authorization/lib/declarative_authorization/reader.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Top-level reader, parses the methods <tt>privileges</tt> and
+<tt>authorization</tt>. <tt>authorization</tt> takes a block with
+authorization rules as described in <a
+href="AuthorizationRulesReader.html">AuthorizationRulesReader</a>. The
+block to <tt>privileges</tt> defines privilege hierarchies, as described in
+<a href="PrivilegesReader.html">PrivilegesReader</a>.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000187">factory</a>&nbsp;&nbsp;
+      <a href="#M000189">load</a>&nbsp;&nbsp;
+      <a href="#M000186">new</a>&nbsp;&nbsp;
+      <a href="#M000188">parse</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000187" class="method-detail">
+        <a name="M000187"></a>
+
+        <div class="method-heading">
+          <a href="#M000187" class="method-signature">
+          <span class="method-name">factory</span><span class="method-args">(obj)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+ensures you get back a <a href="DSLReader.html">DSLReader</a> if you
+provide a:
+</p>
+<pre>
+  DSLReader - you will get it back.
+  String or Array - it will treat it as if you have passed a path or an array of paths and attempt to load those.
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000187-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000187-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/reader.rb, line 62</span>
+62:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">factory</span>(<span class="ruby-identifier">obj</span>)
+63:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">obj</span>
+64:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Reader</span><span class="ruby-operator">::</span><span class="ruby-constant">DSLReader</span>
+65:           <span class="ruby-identifier">obj</span>
+66:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>, <span class="ruby-constant">Array</span>
+67:           <span class="ruby-identifier">load</span>(<span class="ruby-identifier">obj</span>)
+68:         <span class="ruby-keyword kw">end</span>
+69:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000189" class="method-detail">
+        <a name="M000189"></a>
+
+        <div class="method-heading">
+          <a href="#M000189" class="method-signature">
+          <span class="method-name">load</span><span class="method-args">(dsl_files)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Loads and parses a DSL from the given file name.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000189-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000189-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/reader.rb, line 84</span>
+84:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load</span> (<span class="ruby-identifier">dsl_files</span>)
+85:         <span class="ruby-comment cmt"># TODO cache reader in production mode?</span>
+86:         <span class="ruby-identifier">reader</span> = <span class="ruby-identifier">new</span>
+87:         <span class="ruby-identifier">dsl_files</span> = [<span class="ruby-identifier">dsl_files</span>].<span class="ruby-identifier">flatten</span>
+88:         <span class="ruby-identifier">dsl_files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+89:           <span class="ruby-keyword kw">begin</span>
+90:             <span class="ruby-identifier">reader</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file</span>), <span class="ruby-identifier">file</span>)
+91:           <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SystemCallError</span>
+92:             <span class="ruby-identifier">raise</span> <span class="ruby-operator">::</span><span class="ruby-constant">Authorization</span><span class="ruby-operator">::</span><span class="ruby-constant">Reader</span><span class="ruby-operator">::</span><span class="ruby-constant">DSLFileNotFoundError</span>, <span class="ruby-node">&quot;Error reading authorization rules file with path '#{file}'!  Please ensure it exists and that it is accessible.&quot;</span>
+93:           <span class="ruby-keyword kw">end</span>
+94:         <span class="ruby-keyword kw">end</span>
+95:         <span class="ruby-identifier">reader</span>
+96:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000186" class="method-detail">
+        <a name="M000186"></a>
+
+        <div class="method-heading">
+          <a href="#M000186" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000186-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000186-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/reader.rb, line 53</span>
+53:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> ()
+54:         <span class="ruby-ivar">@privileges_reader</span> = <span class="ruby-constant">PrivilegesReader</span>.<span class="ruby-identifier">new</span>
+55:         <span class="ruby-ivar">@auth_rules_reader</span> = <span class="ruby-constant">AuthorizationRulesReader</span>.<span class="ruby-identifier">new</span>
+56:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000188" class="method-detail">
+        <a name="M000188"></a>
+
+        <div class="method-heading">
+          <a href="#M000188" class="method-signature">
+          <span class="method-name">parse</span><span class="method-args">(dsl_data, file_name = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parses a authorization DSL specification from the string given in
+<tt>dsl_data</tt>. Raises <a href="DSLSyntaxError.html">DSLSyntaxError</a>
+if errors occur on parsing.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000188-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000188-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/declarative_authorization/lib/declarative_authorization/reader.rb, line 73</span>
+73:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span> (<span class="ruby-identifier">dsl_data</span>, <span class="ruby-identifier">file_name</span> = <span class="ruby-keyword kw">nil</span>)
+74:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file_name</span>
+75:           <span class="ruby-constant">DSLMethods</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>).<span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">dsl_data</span>, <span class="ruby-identifier">file_name</span>)
+76:         <span class="ruby-keyword kw">else</span>
+77:           <span class="ruby-constant">DSLMethods</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>).<span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">dsl_data</span>)
+78:         <span class="ruby-keyword kw">end</span>
+79:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SyntaxError</span>, <span class="ruby-constant">NoMethodError</span>, <span class="ruby-constant">NameError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+80:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">DSLSyntaxError</span>, <span class="ruby-node">&quot;Illegal DSL syntax: #{e}&quot;</span>
+81:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
